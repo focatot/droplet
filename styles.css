@@ -1,0 +1,37 @@
+body {
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+}
+
+.mainLocator {
+    width: 75%;
+    margin: 10% auto auto;
+    text-align: center;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 30px 50px; /* Adjust the gap between grid items as needed */
+    margin: 150px auto;
+  }
+  
+  .grid-item {
+    background-color: gray;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 3px;
+    width: 1fr; /* Adjust the width as needed */
+    height: 80px; /* Adjust the height as needed */
+  }
+
+  @media (max-width: 600px) {}
