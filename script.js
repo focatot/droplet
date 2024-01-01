@@ -1,6 +1,104 @@
-// Get DOM elements
+// IMPORTING KEYS
+import { GOOGLE_MAPS_API_KEY, OPENWEATHERMAP_API_KEY } from './config.js';
+
+// GLOBAL VARIABLES
 const inputField = document.getElementById('locationInput');
-const weatherElements = {
+
+// GOOGLE API
+
+// INITIALIZING GOOGLE MAPS AND AUTOCOMPLETE
+// This callback function is executed when the Google Maps API is loaded.
+function initMap() {
+
+  // Create Autocomplete object
+  const autocomplete = new google.maps.places.Autocomplete(inputField, {
+    types: ['(cities)'] // Restrict to cities
+  });
+
+  // Event listeners
+  autocomplete.addListener('place_changed', handlePlaceChanged);
+  inputField.addEventListener('keydown', handleEnterKey);
+
+  // Functions
+  function handlePlaceChanged() {
+    const place = autocomplete.getPlace();
+    if (place.geometry && place.geometry.location) {
+      handleWeatherRequest(place.name);
+    }
+  }
+}
+
+
+// GOOGLE MAPS API SCRIPT LOADING
+function loadGoogleMapsScript() {
+  const script = document.createElement('script');
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
+  script.defer = true;
+  script.async = true;
+  script.onload = initMap; // Call initMap once the script is loaded
+
+  // Set up an event listener to handle script errors
+  script.onerror = function () {
+    console.error('Error loading Google Maps API script.');
+  };
+
+  // Append the script element to the document's head
+  document.head.appendChild(script);
+}
+
+
+// RUNNING GOOGLE MAPS API
+loadGoogleMapsScript();
+
+// HANDLING WEATHER REQUEST
+// This function handles the weather request based on the provided city name.
+function handleWeatherRequest(cityName) {
+  if (cityName.trim() !== "") {
+    inputField.value = "";
+    getWeatherByCity(cityName, inputField);
+    
+  } else {
+    alert("Please enter a valid city name.");
+  }
+}
+
+// HANDLING ENTER KEY PRESS
+// This function handles the keydown event for the Enter key and triggers the weather request.
+function handleEnterKey(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    handleWeatherRequest(inputField.value);
+  }
+}
+
+// FETCHING WEATHER DATA BY CITY USING OPENWEATHERMAP API
+// This function fetches weather data from the OpenWeatherMap API based on the provided city name.
+function getWeatherByCity(cityName) {
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${OPENWEATHERMAP_API_KEY}&units=metric`)
+    .then(response => response.json())
+    .then(updateWeatherInfo)
+    .catch(error => console.log('error', error));
+  
+}
+
+
+// FUNCTION TO INITIATE A WEATHER REQUEST
+// This function initiates a weather request based on the current value of the input field.
+function getWeather() {
+  handleWeatherRequest(inputField.value);
+}
+
+// GET DOM ELEMENTS
+// This function retrieves the input field element by its ID
+function getInputField() {
+  return document.getElementById('locationInput');
+  
+}
+
+// GETTING WEATHER ELEMENTS
+// This function returns an object containing references to various weather-related DOM elements.
+function getWeatherElements() {
+  return {
   city: document.getElementById('cityName'),
   temp: document.getElementById('currentTemp'),
   feels: document.getElementById('feelsLike'),
@@ -14,54 +112,15 @@ const weatherElements = {
   cloud: document.getElementById('cloudiness'),
   rise: document.getElementById('sunrise'),
   set: document.getElementById('sunset'),
-};
-
-// Create Autocomplete object
-const autocomplete = new google.maps.places.Autocomplete(inputField, {
-  types: ['(cities)'] // Restrict to cities
-});
-
-// Event listeners
-autocomplete.addListener('place_changed', handlePlaceChanged);
-inputField.addEventListener('keydown', handleEnterKey);
-
-// Functions
-function handlePlaceChanged() {
-  const place = autocomplete.getPlace();
-  if (place.geometry && place.geometry.location) {
-    handleWeatherRequest(place.name);
-  }
+  };
 }
 
-function handleEnterKey(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    handleWeatherRequest(inputField.value);
-  }
-}
 
-function getWeather() {
-  handleWeatherRequest(inputField.value);
-}
-
-function handleWeatherRequest(cityName) {
-  if (cityName.trim() !== "") {
-    getWeatherByCity(cityName);
-  } else {
-    alert("Please enter a valid city name.");
-  }
-}
-
-function getWeatherByCity(cityName) {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`)
-    .then(response => response.json())
-    .then(updateWeatherInfo)
-    .catch(error => console.log('error', error));
-}
-
+// UPDATING WEATHER DATA IN HTML
+// This function updates the HTML content of weather-related elements based on the received weather data.
 function updateWeatherInfo(weatherData) {
   inputField.value = "";
-  // Update the HTML content based on weather data
+  const weatherElements = getWeatherElements();
   weatherElements.city.innerHTML = `<h1>${weatherData.name}, ${weatherData.sys.country}</h1>`;
   weatherElements.temp.innerHTML = `<p>Temperature:</br>${weatherData.main.temp} &deg;C<p>`;
   weatherElements.feels.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like} &deg;C</p>`;
@@ -77,7 +136,9 @@ function updateWeatherInfo(weatherData) {
   weatherElements.set.innerHTML = `<p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
 }
 
-// Initial weather request
+
+// INITIAL WEATHER REQUEST
+// Initiating a weather request for the initial city ("Caracas")
 getWeatherByCity("Caracas");
 
-  
+
