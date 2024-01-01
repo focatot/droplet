@@ -12,8 +12,9 @@
 <body>
   <div class="mainLocator">
     <div id="cityName"></div>
-    <!---<input type="text" id="locationInput" placeholder="Enter location">
-    <button onclick="getWeather()">Go</button>--->
+    <input type="text" id="locationInput" list="citiesList" placeholder="Enter location">
+    <datalist id="citiesList"></datalist>
+    <button onclick="getWeather()">Go</button>
     <div class="grid-container">
       <div class="grid-item" id="currentTemp"></div>
       <div class="grid-item" id="feelsLike"></div>
