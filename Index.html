@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="styles.css" as="style" onload="this.rel='stylesheet'"><noscript><link rel="stylesheet" href="styles.css"></noscript>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -12,8 +13,7 @@
 <body>
   <div class="mainLocator">
     <div id="cityName"></div>
-    <input type="text" id="locationInput" list="citiesList" placeholder="Enter location">
-    <datalist id="citiesList"></datalist>
+    <input type="text" id="locationInput" placeholder="Enter location">
     <button onclick="getWeather()">Go</button>
     <div class="grid-container">
       <div class="grid-item" id="currentTemp"></div>
@@ -29,6 +29,8 @@
       <div class="grid-item" id="sunrise"></div>
       <div class="grid-item" id="sunset"></div>
   </div>
+  <script> function initMap() {}</script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYbEUl_sMd6gtJKnH-JUPEvRIeU-ckKS0&libraries=places&callback=initMap"></script>
   <script src="script.js" ></script>
 </body>
 </html>
