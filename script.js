@@ -1,6 +1,3 @@
-// IMPORTING KEYS
-import { GOOGLE_MAPS_API_KEY, OPENWEATHERMAP_API_KEY } from './config.js';
-
 // GLOBAL VARIABLES
 const inputField = document.getElementById('locationInput');
 
@@ -32,7 +29,7 @@ function initMap() {
 // GOOGLE MAPS API SCRIPT LOADING
 function loadGoogleMapsScript() {
   const script = document.createElement('script');
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBYbEUl_sMd6gtJKnH-JUPEvRIeU-ckKS0&libraries=places&callback=initMap`;
   script.defer = true;
   script.async = true;
   script.onload = initMap; // Call initMap once the script is loaded
@@ -74,7 +71,7 @@ function handleEnterKey(event) {
 // FETCHING WEATHER DATA BY CITY USING OPENWEATHERMAP API
 // This function fetches weather data from the OpenWeatherMap API based on the provided city name.
 function getWeatherByCity(cityName) {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${OPENWEATHERMAP_API_KEY}&units=metric`)
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`)
     .then(response => response.json())
     .then(updateWeatherInfo)
     .catch(error => console.log('error', error));
