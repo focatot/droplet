@@ -2,7 +2,7 @@
 //import { GOOGLE_MAPS_API_KEY, OPENWEATHERMAP_API_KEY } from './config.js';
 
 //CALL KEYCHAIN VALUES
-require('dotenv').config();
+//require('dotenv').config();
 
 const weatherApiKey = process.env.WEATHER_API_KEY;
 const placesApiKey = process.env.PLACES_API_KEY;
