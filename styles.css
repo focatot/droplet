@@ -4,18 +4,19 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  font-size: 16px;
 }
 
 .mainLocator {
-  width: 75%;
-  margin: 10% auto auto;
+  width: 80%;
+  margin: 8% auto auto;
   text-align: center;
-  color: #ccc; /* Light gray text color */
+  color: #ccc;
   font-family: 'Roboto', sans-serif;
 }
 
 #cityName {
-  color: #eee; /* Slightly lighter gray for city name */
+  color: #eee;
 }
 
 .grid-container {
@@ -27,24 +28,49 @@ body {
 }
 
 .grid-item {
-  background-color: rgba(128, 128, 128, 0.8); /* Slightly see-through gray */
+  background-color: rgba(128, 128, 128, 0.8);
   padding: 20px;
   text-align: center;
   color: white;
   border-radius: 3px;
   width: 1fr;
   height: 80px;
-  backdrop-filter: blur(5px); /* Apply a 5px blur effect to the background */
+  backdrop-filter: blur(5px);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.grid-item:hover {
+  background-color: rgba(128, 128, 128, 1);
 }
 
 #locationInput,
 button {
-  background-color: #777; /* Medium gray for input and button */
-  color: #ddd; /* Light gray text color */
+  background-color: #777;
+  color: #ddd;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#locationInput::placeholder {
+  color: #999;
 }
 
 @media (max-width: 600px) {
-  /* Media query styles for screens with a maximum width of 600px */
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust column width for smaller screens */
+  }
 }
 
-/*REVAMP NEEDED*/
+#minMaxTemp {
+  display: flex; /* Use flexbox to make minTemp and maxTemp display horizontally */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  background-color: transparent;
+  width: 50%;
+  margin: 0 auto; /* Center horizontally by adding auto margin */
+}
+
+#minTemp,
+#maxTemp {
+  flex: 1; /* Make each div take equal width inside the #minMaxTemp container */
+  margin-right: 10px;
+}
