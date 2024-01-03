@@ -1,39 +1,50 @@
 body {
-    background-color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .mainLocator {
-    width: 75%;
-    margin: 10% auto auto;
-    text-align: center;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    
+  width: 75%;
+  margin: 10% auto auto;
+  text-align: center;
+  color: #ccc; /* Light gray text color */
+  font-family: 'Roboto', sans-serif;
+}
+
+#cityName {
+  color: #eee; /* Slightly lighter gray for city name */
 }
 
 .grid-container {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 30px 50px; /* Adjust the gap between grid items as needed */
-    margin: 150px auto;
-  }
-  
-  .grid-item {
-    background-color: gray;
-    padding: 20px;
-    text-align: center;
-    color: white;
-    border-radius: 3px;
-    width: 1fr; /* Adjust the width as needed */
-    height: 80px; /* Adjust the height as needed */
-  }
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 30px 50px;
+  margin: 150px auto;
+}
 
-  @media (max-width: 600px) {}
+.grid-item {
+  background-color: rgba(128, 128, 128, 0.8); /* Slightly see-through gray */
+  padding: 20px;
+  text-align: center;
+  color: white;
+  border-radius: 3px;
+  width: 1fr;
+  height: 80px;
+  backdrop-filter: blur(5px); /* Apply a 5px blur effect to the background */
+}
+
+#locationInput,
+button {
+  background-color: #777; /* Medium gray for input and button */
+  color: #ddd; /* Light gray text color */
+}
+
+@media (max-width: 600px) {
+  /* Media query styles for screens with a maximum width of 600px */
+}
 
 /*REVAMP NEEDED*/
