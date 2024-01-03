@@ -71,6 +71,12 @@ button {
 
 #minTemp,
 #maxTemp {
-  flex: 1; /* Make each div take equal width inside the #minMaxTemp container */
   margin-right: 10px;
+}
+
+
+/*--------VALUES--------*/
+
+#currentTemp {
+ font-size: 32px;
 }
