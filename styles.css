@@ -68,6 +68,12 @@ button {
   }
 }
 
+/*--------VALUES--------*/
+
+#currentTemp {
+ font-size: 30px;
+}
+
 #minMaxTemp {
   display: flex; /* Use flexbox to make minTemp and maxTemp display horizontally */
   align-items: center; /* Center vertically */
@@ -80,11 +86,4 @@ button {
 #minTemp,
 #maxTemp {
   margin-right: 10px;
-}
-
-
-/*--------VALUES--------*/
-
-#currentTemp {
- font-size: 30px;
 }
