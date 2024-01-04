@@ -15,7 +15,7 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-div#descriptor.mainIndicator p {
+.mainIndicator p {
   margin: 10px 0 0 0;
 }
 
