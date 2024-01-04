@@ -121,7 +121,7 @@ function updateWeatherInfo(weatherData) {
   const weatherElements = getWeatherElements();
   weatherElements.city.innerHTML = `<h1>${weatherData.name}, ${weatherData.sys.country}</h1>`;
   weatherElements.description.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
-  weatherElements.temp.innerHTML = `<p>${weatherData.main.temp} &deg;</p>`;
+  weatherElements.temp.innerHTML = `<p>${weatherData.main.temp}&deg;</p>`;
   weatherElements.feels.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like} &deg;C</p>`;
   weatherElements.humid.innerHTML = `<p>Humidity:</br>${weatherData.main.humidity}%</p>`;
   weatherElements.min.innerHTML = `<p>L: ${weatherData.main.temp_min}&deg;</p>`;
