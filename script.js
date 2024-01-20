@@ -126,7 +126,7 @@ function updateWeatherInfo(weatherData) {
   weatherElements.max.innerHTML = `<p>H: ${weatherData.main.temp_max}&deg;</p>`;
   weatherElements.vision.innerHTML = `<p>Visibility:<bbr>${weatherData.visibility / 1000} km</p>`;
   weatherElements.wind.innerHTML = `<p>Wind Speed:<bbr>${(weatherData.wind.speed * 1.60934).toFixed(0)} km/h</p>`;
-  weatherElements.windDir.innerHTML = `<p>Wind Direction:</br>${weatherData.wind.deg}&deg; ${wind.direction.code}<br>${wind.direction.name}</p>`;
+  weatherElements.windDir.innerHTML = `<p>Wind Direction:</br>${weatherData.wind.deg}&deg; ${weatherData.wind.direction.code}<br>${weatherData.wind.direction.name}</p>`;
   weatherElements.cloud.innerHTML = `<p>Cloudiness:</br>${weatherData.clouds.all}%</p>`;
   weatherElements.rise.innerHTML = `<p>Sunrise:</br>${new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>`;
   weatherElements.set.innerHTML = `<p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
