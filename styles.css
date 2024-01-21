@@ -87,3 +87,10 @@ button {
 #maxTemp {
   margin-right: 10px;
 }
+
+#currentWeatherWidget {
+  display: flex; /* Use flexbox to make minTemp and maxTemp display horizontally */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  margin: 0 auto; /* Center horizontally by adding auto margin */
+}
