@@ -1,4 +1,4 @@
-name: Node.js Application
+name: Pass Secrets to script.js
 
 on:
   push:
@@ -18,19 +18,17 @@ jobs:
       with:
         node-version: 14
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Create public directory
-      run: mkdir -p public
-
-    - name: Write secrets to file
+    - name: Pass secrets to script.js
       run: echo "const OWM_HUSH = '${{ secrets.OWM_HUSH }}'; const PLACES_HUSH = '${{ secrets.PLACES_HUSH }}';" > public/secrets.js
 
+    - name: Display secrets
+      run: cat public/secrets.js
+
+    - name: Install dependencies (if needed)
+      run: npm install
+
     - name: Run Node.js application
-      run: npm ci
-      env:
-        OWM_HUSH: ${{ secrets.OWM_HUSH }}
-        PLACES_HUSH: ${{ secrets.PLACES_HUSH }}
+      run: node script.js
+
 
 
