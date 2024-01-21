@@ -119,11 +119,11 @@ function updateWeatherInfo(weatherData) {
   const weatherElements = getWeatherElements();
   weatherElements.city.innerHTML = `<h1>${weatherData.name}</h1>`;
   weatherElements.description.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
-  weatherElements.temp.innerHTML = `<p>${weatherData.main.temp}&deg;</p>`;
-  weatherElements.feels.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like} &deg;C</p>`;
+  weatherElements.temp.innerHTML = `<p>${weatherData.main.temp.toFixed(0)}&deg;</p>`;
+  weatherElements.feels.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like.toFixed(0)} &deg;C</p>`;
   weatherElements.humid.innerHTML = `<p>Humidity:</br>${weatherData.main.humidity}%</p>`;
-  weatherElements.min.innerHTML = `<p>L: ${weatherData.main.temp_min}&deg;</p>`;
-  weatherElements.max.innerHTML = `<p>H: ${weatherData.main.temp_max}&deg;</p>`;
+  weatherElements.min.innerHTML = `<p>L: ${weatherData.main.temp_min.toFixed(0)}&deg;</p>`;
+  weatherElements.max.innerHTML = `<p>H: ${weatherData.main.temp_max.toFixed(0)}&deg;</p>`;
   weatherElements.vision.innerHTML = `<p>Visibility:</br>${weatherData.visibility / 1000} km</p>`;
   weatherElements.wind.innerHTML = `<p>Wind Speed:</br>${(weatherData.wind.speed * 1.60934).toFixed(0)} km/h</p>`;
   weatherElements.windDir.innerHTML = `<p>Wind Direction:</br>${weatherData.wind.deg} &deg;</p>`;
