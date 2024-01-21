@@ -1,9 +1,13 @@
+// server.js
 const express = require('express');
 const app = express();
+const path = require('path');
 const port = process.env.PORT || 3000;
 
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
-    res.send(`OWM_HUSH: ${process.env.OWM_HUSH}, PLACES_HUSH: ${process.env.PLACES_HUSH}`);
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(port, () => {
