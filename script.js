@@ -1,7 +1,7 @@
 // GLOBAL VARIABLES
 const inputField = document.getElementById('locationInput');
-const weatherHushK = process.env.OWM_HUSH;
-const placesHushK = process.env.PLACES_HUSH;
+const weatherHushK = window.env.OWM_HUSH;
+const placesHushK = window.env.PLACES_HUSH;
 
 // GOOGLE API
 
