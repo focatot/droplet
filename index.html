@@ -11,13 +11,24 @@
 </head>
 <body>
   <div class="mainLocator">
-    <div class="mainIndicator" id="cityName"></div>
-    <div class="mainIndicator" id="descriptor"></div>
-    <div class="mainIndicator" id="currentTemp"></div>
-    <div id="minMaxTemp">
-      <div class="mainIndicator" id="minTemp"></div>
-      <div class="mainIndicator" id="maxTemp"></div>
+
+    <div id="currentWeatherWidget">
+      <div class="location-div">
+        <div class="mainIndicator" id="cityName"></div>
+        <div class="mainIndicator" id="descriptor"></div>
+      </div>
+
+      <div class="temp-div">
+        <div class="maintemp">
+          <div class="mainIndicator" id="currentTemp"></div>
+        </div>
+        <div id="minMaxTemp">
+          <div class="mainIndicator" id="minTemp"></div>
+          <div class="mainIndicator" id="maxTemp"></div>
+        </div>
+      </div>
     </div>
+
     <input type="text" id="locationInput" placeholder="Enter location">
     <button onclick="getWeather()">Go</button>
     <div class="grid-container">
