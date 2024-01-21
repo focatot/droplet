@@ -18,9 +18,6 @@ jobs:
       with:
         node-version: 14
 
-    - name: Install dependencies
-      run: npm install
-
     - name: Create public directory
       run: mkdir -p public
 
