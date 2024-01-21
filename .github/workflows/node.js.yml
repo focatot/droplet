@@ -21,8 +21,12 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Write secrets to file
+      run: echo "const OWM_HUSH = '${{ secrets.OWM_HUSH }}'; const PLACES_HUSH = '${{ secrets.PLACES_HUSH }}';" > public/secrets.js
+
     - name: Run Node.js application
+      run: node server.js
       env:
         OWM_HUSH: ${{ secrets.OWM_HUSH }}
         PLACES_HUSH: ${{ secrets.PLACES_HUSH }}
-      run: node server.js
+
