@@ -1,7 +1,7 @@
 // GLOBAL VARIABLES
 const inputField = document.getElementById('locationInput');
 
-import { OWM_HUSH, PLACES_HUSH } from './secrets.js';
+import { OWM_HUSH, PLACES_HUSH } from 'public/secrets.js';
 const weatherHushK = '${{ secrets.OWM_HUSH }}';
 const placesHushK = '${{ secrets.PLACES_HUSH }}';
 
