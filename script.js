@@ -97,12 +97,12 @@ function getInputField() {
 function getWeatherElements() {
   return {
   city: document.getElementById('cityName'),
+  description: document.getElementById('descriptor'),
   temp: document.getElementById('currentTemp'),
   feels: document.getElementById('feelsLike'),
   humid: document.getElementById('currentHumid'),
   min: document.getElementById('minTemp'),
   max: document.getElementById('maxTemp'),
-  press: document.getElementById('pressure'),
   vision: document.getElementById('visibility'),
   wind: document.getElementById('windSpd'),
   windDir: document.getElementById('windDirection'),
@@ -112,19 +112,18 @@ function getWeatherElements() {
   };
 }
 
-
 // UPDATING WEATHER DATA IN HTML
 // This function updates the HTML content of weather-related elements based on the received weather data.
 function updateWeatherInfo(weatherData) {
   inputField.value = "";
   const weatherElements = getWeatherElements();
-  weatherElements.city.innerHTML = `<h1>${weatherData.name}, ${weatherData.sys.country}</h1>`;
-  weatherElements.temp.innerHTML = `<p>Temperature:</br>${weatherData.main.temp} &deg;C<p>`;
+  weatherElements.city.innerHTML = `<h1>${weatherData.name}</h1>`;
+  weatherElements.description.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
+  weatherElements.temp.innerHTML = `<p>${weatherData.main.temp}&deg;</p>`;
   weatherElements.feels.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like} &deg;C</p>`;
   weatherElements.humid.innerHTML = `<p>Humidity:</br>${weatherData.main.humidity}%</p>`;
-  weatherElements.min.innerHTML = `<p>Min Temperature:</br>${weatherData.main.temp_min} &deg;C</p>`;
-  weatherElements.max.innerHTML = `<p>Max Temperature:</br>${weatherData.main.temp_max} &deg;C</p>`;
-  weatherElements.press.innerHTML = `<p>Pressure:</br>${weatherData.main.pressure} hPa</p>`;
+  weatherElements.min.innerHTML = `<p>L: ${weatherData.main.temp_min}&deg;</p>`;
+  weatherElements.max.innerHTML = `<p>H: ${weatherData.main.temp_max}&deg;</p>`;
   weatherElements.vision.innerHTML = `<p>Visibility:</br>${weatherData.visibility / 1000} km</p>`;
   weatherElements.wind.innerHTML = `<p>Wind Speed:</br>${(weatherData.wind.speed * 1.60934).toFixed(0)} km/h</p>`;
   weatherElements.windDir.innerHTML = `<p>Wind Direction:</br>${weatherData.wind.deg} &deg;</p>`;
@@ -133,9 +132,6 @@ function updateWeatherInfo(weatherData) {
   weatherElements.set.innerHTML = `<p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
 }
 
-
 // INITIAL WEATHER REQUEST
 // Initiating a weather request for the initial city ("Caracas")
 getWeatherByCity("Caracas");
-
-
