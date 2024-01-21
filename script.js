@@ -1,11 +1,6 @@
 // GLOBAL VARIABLES
 const inputField = document.getElementById('locationInput');
 
-const { OWM_HUSH, PLACES_HUSH } = require('./public/secrets.js');
-
-const weatherHushK = '${{ secrets.OWM_HUSH }}';
-const placesHushK = '${{ secrets.PLACES_HUSH }}';
-
 // GOOGLE API
 
 // INITIALIZING GOOGLE MAPS AND AUTOCOMPLETE
@@ -34,7 +29,7 @@ function initMap() {
 // GOOGLE MAPS API SCRIPT LOADING
 function loadGoogleMapsScript() {
   const script = document.createElement('script');
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${placesHushK}&libraries=places&callback=initMap`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBYbEUl_sMd6gtJKnH-JUPEvRIeU-ckKS0&libraries=places&callback=initMap`;
   script.defer = true;
   script.async = true;
   script.onload = initMap; // Call initMap once the script is loaded
@@ -76,7 +71,7 @@ function handleEnterKey(event) {
 // FETCHING WEATHER DATA BY CITY USING OPENWEATHERMAP API
 // This function fetches weather data from the OpenWeatherMap API based on the provided city name.
 function getWeatherByCity(cityName) {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${weatherHushK}&units=metric`)
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`)
     .then(response => response.json())
     .then(updateWeatherInfo)
     .catch(error => console.log('error', error));
