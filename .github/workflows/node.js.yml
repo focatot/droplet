@@ -1,0 +1,28 @@
+name: Node.js Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Node.js application
+      env:
+        OWM_HUSH: ${{ secrets.OWM_HUSH }}
+        PLACES_HUSH: ${{ secrets.PLACES_HUSH }}
+      run: node server.js
