@@ -79,7 +79,6 @@ button {
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
   background-color: transparent;
-  width: 50%;
   margin: 0 auto; /* Center horizontally by adding auto margin */
 }
 
