@@ -2,62 +2,59 @@
 const inputField = document.getElementById('locationInput');
 
 // GOOGLE API
-
 // INITIALIZING GOOGLE MAPS AND AUTOCOMPLETE
-// This callback function is executed when the Google Maps API is loaded.
-function initMap() {
 
-  // Create Autocomplete object
-  const autocomplete = new google.maps.places.Autocomplete(inputField, {
-    types: ['(cities)'] // Restrict to cities
-  });
+  // This callback function is executed when the Google Maps API is loaded.
+  function initMap() {
 
-  // Event listeners
-  autocomplete.addListener('place_changed', handlePlaceChanged);
-  inputField.addEventListener('keydown', handleEnterKey);
+    // Create Autocomplete object
+    const autocomplete = new google.maps.places.Autocomplete(inputField, {
+    types: ['(cities)']
+    });
 
-  // Functions
-  function handlePlaceChanged() {
-    const place = autocomplete.getPlace();
-    if (place.geometry && place.geometry.location) {
-      handleWeatherRequest(place.name);
+    // Event listeners
+    autocomplete.addListener('place_changed', handlePlaceChanged);
+    inputField.addEventListener('keydown', handleEnterKey);
+
+    // Functions
+    function handlePlaceChanged() {
+      const place = autocomplete.getPlace();
+      if (place.geometry && place.geometry.location) {
+        handleWeatherRequest(place.name);
+      }
     }
   }
-}
-
-
-// GOOGLE MAPS API SCRIPT LOADING
-function loadGoogleMapsScript() {
-  const script = document.createElement('script');
-  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBYbEUl_sMd6gtJKnH-JUPEvRIeU-ckKS0&libraries=places&callback=initMap`;
-  script.defer = true;
-  script.async = true;
-  script.onload = initMap; // Call initMap once the script is loaded
-
-  // Set up an event listener to handle script errors
-  script.onerror = function () {
-    console.error('Error loading Google Maps API script.');
-  };
-
+  // Places API script loading
+  function loadGoogleMapsScript() {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBYbEUl_sMd6gtJKnH-JUPEvRIeU-ckKS0&libraries=places&callback=initMap`;
+    script.defer = true;
+    script.async = true;
+    script.onload = initMap;
+    script.onerror = function () {
+      console.error('Error loading Google Maps API script.');
+    };
+  }
   // Append the script element to the document's head
   document.head.appendChild(script);
-}
 
+  // Running Places API
+  loadGoogleMapsScript();
 
-// RUNNING GOOGLE MAPS API
-loadGoogleMapsScript();
+//---------------------
+
 
 // HANDLING WEATHER REQUEST
-// This function handles the weather request based on the provided city name.
-function handleWeatherRequest(cityName) {
-  if (cityName.trim() !== "") {
+  // This function handles the weather request based on the provided city name.
+  function handleWeatherRequest(cityName) {
+    if (cityName.trim() !== "") {
     inputField.value = "";
     getWeatherByCity(cityName, inputField);
-    
-  } else {
-    alert("Please enter a valid city name.");
+    } 
+    else {
+      alert("Please enter a valid city name.");
+    }
   }
-}
 
 // HANDLING ENTER KEY PRESS
 // This function handles the keydown event for the Enter key and triggers the weather request.
