@@ -28,7 +28,7 @@ jobs:
       run: echo "const OWM_HUSH = '${{ secrets.OWM_HUSH }}'; const PLACES_HUSH = '${{ secrets.PLACES_HUSH }}';" > public/secrets.js
 
     - name: Run Node.js application
-      run: node server.js
+      run: npm ci
       env:
         OWM_HUSH: ${{ secrets.OWM_HUSH }}
         PLACES_HUSH: ${{ secrets.PLACES_HUSH }}
