@@ -1,0 +1,14 @@
+jobs:
+  your_job:
+    runs-on: ubuntu-latest
+    env:
+      OWM_HUSH: ${{ secrets.OWM_HUSH }}
+      PLACES_HUSH: ${{ secrets.PLACES_HUSH }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Use secret in your script
+        run: |
+          echo $OWM_HUSH
+          echo $PLACES_HUSH
+          # Now you can use $MY_SECRET_KEY in your scripts
