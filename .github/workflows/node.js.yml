@@ -21,6 +21,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Create public directory
+      run: mkdir -p public
+
     - name: Write secrets to file
       run: echo "const OWM_HUSH = '${{ secrets.OWM_HUSH }}'; const PLACES_HUSH = '${{ secrets.PLACES_HUSH }}';" > public/secrets.js
 
@@ -29,4 +32,5 @@ jobs:
       env:
         OWM_HUSH: ${{ secrets.OWM_HUSH }}
         PLACES_HUSH: ${{ secrets.PLACES_HUSH }}
+
 
