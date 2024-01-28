@@ -10,27 +10,22 @@
   <title>Garua</title>
 </head>
 <body>
-  <div class="mainLocator">
+  <div class="weatherDashboard"> <!-- mainLocator -->
 
-    <div id="currentWeatherWidget">
-      <div class="location-div">
-        <div class="mainIndicator" id="cityName"></div>
-        <div class="mainIndicator" id="descriptor"></div>
-      </div>
-
-      <div class="temp-div">
-        <div class="maintemp">
-          <div class="mainIndicator" id="currentTemp"></div>
-        </div>
-        <div id="minMaxTemp">
-          <div class="mainIndicator" id="minTemp"></div>
-          <div class="mainIndicator" id="maxTemp"></div>
-        </div>
+    <div class="visualizerHub"> <!-- currentWeatherWidget -->
+      <!-- <div class="MAPBOX"></div> -->
+      <div class="citySpotlight"> <!-- location-div -->
+        <div class="liveValue" id="cityName"></div> <!-- mainIndicator -->
+        <div class="liveValue" id="descriptor"></div> <!-- mainIndicator -->
+        <div class="liveValue" id="currentTemp"></div> <!-- mainIndicator -->
+        <div class="liveValue" id="minTemp"></div> <!-- mainIndicator -->
+        <div class="liveValue" id="maxTemp"></div> <!-- mainIndicator -->
       </div>
     </div>
 
     <input type="text" id="locationInput" placeholder="Enter location">
     <button onclick="getWeather()">Go</button>
+
     <div class="grid-container">
       <div class="grid-item" id="feelsLike"></div>
       <div class="grid-item" id="currentHumid"></div>
@@ -41,9 +36,8 @@
       <div class="grid-item" id="sunrise"></div>
       <div class="grid-item" id="sunset"></div>
     </div>
-  </div>
-  <script type="module" src="script.js" ></script>
+  </div> 
+</div> 
+<script type="module" src="script.js" ></script>
 </body>
 </html>
-
-<!---TEST FOR BRANCHING BEFORE CHANGES TO API HANDLING-->
