@@ -34,9 +34,9 @@ const inputField = document.getElementById('locationInput');
     script.onerror = function () {
       console.error('Error loading Google Maps API script.');
     };
+    // Append the script element to the document's head
+    document.head.appendChild(script); 
   }
-  // Append the script element to the document's head
-  document.head.appendChild(script);
 
   // Running Places API
   loadGoogleMapsScript();
