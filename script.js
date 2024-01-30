@@ -68,11 +68,17 @@ function handleEnterKey(event) {
 // FETCHING WEATHER DATA BY CITY USING OPENWEATHERMAP API
 // This function fetches weather data from the OpenWeatherMap API based on the provided city name.
 function getWeatherByCity(cityName) {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`)
+
+  const apiKey = '4c2ea446b8fba1b6f13c58bda72e19b2';
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+
+  fetch(apiUrl)
     .then(response => response.json())
     .then(updateWeatherInfo)
     .catch(error => console.log('error', error));
   
+
+
 }
 
 
