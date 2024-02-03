@@ -32,7 +32,7 @@ body {
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 30px 50px;
-  margin: 150px auto;
+  margin: 100px auto;
 }
 
 .grid-item {
@@ -74,22 +74,39 @@ button {
  font-size: 30px;
 }
 
-/* #minMaxTemp { /DIV FOR MIN MAX TEMP
-  display: flex; /* Use flexbox to make minTemp and maxTemp display horizontally
-  align-items: center; /* Center vertically 
-  justify-content: center; /* Center horizontally 
-  background-color: transparent;
-  margin: 0 auto; /* Center horizontally by adding auto margin 
-} */
-
 #minTemp,
 #maxTemp {
   margin-right: 10px;
 }
 
-#visualizerHub {
-  display: flex; /* Use flexbox to make minTemp and maxTemp display horizontally */
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
-  margin: 0 auto; /* Center horizontally by adding auto margin */
-}
+
+/* WIDGET */
+
+
+    /* Styling the visualizerHub container */
+    .visualizerHub {
+      display: flex;
+      width: 100%;
+      margin: auto auto;
+    }
+
+    /* Styling the map and citySpotlight divs */
+    #map, #citySpotlight {
+      width: 50%; /* Each div takes 50% of the container */
+      height: 300px; 
+      overflow: hidden;
+    }
+
+    /* Optional: Add some styling to the divs for better visualization */
+    #map, #citySpotlight {
+      border: 1px solid #ccc;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styling for citySpotlight content */
+    #citySpotlight {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }

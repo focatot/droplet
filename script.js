@@ -66,7 +66,7 @@ function handleEnterKey(event) {
 }
 
 // FETCHING WEATHER DATA BY CITY USING OPENWEATHERMAP API
-// This function fetches weather data from the OpenWeatherMap API based on the provided city name.
+// ... (setting up API key, constructing API URL, and fetching weather data)
 function getWeatherByCity(cityName) {
 
   const apiKey = '4c2ea446b8fba1b6f13c58bda72e19b2';
@@ -76,9 +76,6 @@ function getWeatherByCity(cityName) {
     .then(response => response.json())
     .then(updateWeatherInfo)
     .catch(error => console.log('error', error));
-  
-
-
 }
 
 
