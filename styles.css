@@ -10,22 +10,23 @@ body {
 .weatherDashboard {
   width: 80%;
   margin: 8% auto auto;
-  text-align: center;
   color: #ccc;
   font-family: 'Roboto', sans-serif;
 }
 
-.liveValue h1 {
-  margin: 10px 0 0 0;
+#liveValueGroup {
+  position: absolute;
+  bottom: 0%;
 }
 
-.liveValue p {
-  margin: 10px 0 0 0;
-}
+/* .liveValue {
+  margin: 0 0 0 1%;
+  padding: 0%;
+} */
 
-#cityName {
-  color: #eee;
-}
+.liveValue h1, p {
+  margin: 0 0 10px 10px;
+} 
 
 .grid-container {
   display: grid;
@@ -51,17 +52,6 @@ body {
   background-color: rgba(128, 128, 128, 1);
 }
 
-#locationInput,
-button {
-  background-color: #777;
-  color: #ddd;
-  transition: background-color 0.3s ease-in-out;
-}
-
-#locationInput::placeholder {
-  color: #999;
-}
-
 @media (max-width: 600px) {
   .grid-container {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust column width for smaller screens */
@@ -71,12 +61,7 @@ button {
 /*--------VALUES--------*/
 
 #currentTemp {
- font-size: 30px;
-}
-
-#minTemp,
-#maxTemp {
-  margin-right: 10px;
+ font-size: 40px;
 }
 
 
@@ -88,7 +73,11 @@ button {
       display: flex;
       width: 100%;
       margin: auto auto;
+      border: 1px solid black; /* Add a border for rounded corners */
+      border-radius: 10px;
+      overflow: hidden; /* To ensure border-radius is applied to child elements */
     }
+    
 
     /* Styling the map and citySpotlight divs */
     #map, #citySpotlight {
@@ -107,6 +96,49 @@ button {
     #citySpotlight {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      position: relative;
+
     }
+
+
+    /* NEEDS IDENTING AND REORG */
+
+    /* SEACRH BOX */
+
+      form {
+        /* This bit sets up the horizontal layout */
+        display:flex;
+        flex-direction:row;
+        
+        /* This bit draws the box around it */
+        border:1px solid grey;
+      
+        /* I've used padding so you can see the edges of the elements. */
+        padding:1px;
+      }
+      
+      input {
+        /* Tell the input to use all the available space */
+        flex-grow:2;
+        /* And hide the input's outline, so the form looks like the outline */
+        border:none;
+        background-color: #333;
+      }
+      
+      input:focus {
+        outline: none; 
+        color:white; /* font color inside search box while typing */
+      }
+      
+      /* Add the focus effect to the form so it contains the button */
+      form:focus-within { 
+        outline: 1px solid black
+      }
+      
+      button {
+        /* Just a little styling to make it pretty */
+        border:2px solid #1b1b1b;
+        background:#1b1b1b;
+        color:white;
+        
+      }

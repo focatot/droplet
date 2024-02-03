@@ -23,8 +23,8 @@
           mapboxgl.accessToken = 'pk.eyJ1IjoiZmNheWF5byIsImEiOiJjbHJ5MmR3bjgxZWp4MmpwYndpejRzc2pqIn0.WnTM1dHJuY92ek7FPXHE_w';
           const map = new mapboxgl.Map({
           container: 'map', // container ID
-          center: [-74.5, 40], // starting position [lng, lat]
-          zoom: 9 // starting zoom
+          center: [-66.899732, 10.471725], // starting position [lng, lat] NEEDS INTEGRATION
+          zoom: 11 // starting zoom 10 for city
           });
         </script>
       </div>
@@ -32,18 +32,22 @@
 
       <!-- CURRENTE CITY DATA -->
       <div id="citySpotlight"> 
-        <div class="liveValue" id="cityName"></div> 
-        <div class="liveValue" id="descriptor"></div> 
-        <div class="liveValue" id="currentTemp"></div> 
-        <div class="liveValue" id="minTemp"></div> 
-        <div class="liveValue" id="maxTemp"></div> 
-        <input type="text" id="locationInput" placeholder="Enter location">
-        <button onclick="getWeather()">Go</button>
+        <form action="">
+          <input type="text" id="locationInput" placeholder="Enter location">
+          <button onclick="getWeather()">Go</button>
+        </form>
+        <div id="liveValueGroup">
+          <div class="liveValue" id="currentTemp"></div> 
+          <div class="liveValue" id="cityName"></div> 
+          <div class="liveValue" id="descriptor"></div> 
+        </div>
       </div>
       <!-- //////// -->
     </div>
 
     <div class="grid-container">
+      <div class="grid-item" id="minTemp"></div> 
+      <div class="grid-item" id="maxTemp"></div> 
       <div class="grid-item" id="feelsLike"></div>
       <div class="grid-item" id="currentHumid"></div>
       <div class="grid-item" id="visibility"></div>
