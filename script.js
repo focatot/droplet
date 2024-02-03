@@ -117,7 +117,7 @@ function getWeatherElements() {
 function updateWeatherInfo(weatherData) {
   inputField.value = "";
   const weatherElements = getWeatherElements();
-  weatherElements.city.innerHTML = `<h1>${weatherData.name}</h1>`;
+  weatherElements.city.innerHTML = `<p>${weatherData.name}<p>`;
   weatherElements.description.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
   weatherElements.temp.innerHTML = `<p>${weatherData.main.temp.toFixed(0)}&deg;</p>`;
   weatherElements.feels.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like.toFixed(0)} &deg;C</p>`;
