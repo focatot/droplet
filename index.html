@@ -1,30 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Garua</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preload" href="styles.css" as="style" onload="this.rel='stylesheet'"><noscript><link rel="stylesheet" href="styles.css"></noscript>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <title>Garua</title>
+  <!--MAPBOX-->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+  <!--///////-->
 </head>
 <body>
-  <div class="weatherDashboard"> <!-- mainLocator -->
+  <div class="weatherDashboard"> 
 
-    <div class="visualizerHub"> <!-- currentWeatherWidget -->
-      <!-- <div class="MAPBOX"></div> -->
-      <div class="citySpotlight"> <!-- location-div -->
-        <div class="liveValue" id="cityName"></div> <!-- mainIndicator -->
-        <div class="liveValue" id="descriptor"></div> <!-- mainIndicator -->
-        <div class="liveValue" id="currentTemp"></div> <!-- mainIndicator -->
-        <div class="liveValue" id="minTemp"></div> <!-- mainIndicator -->
-        <div class="liveValue" id="maxTemp"></div> <!-- mainIndicator -->
+    <div class="visualizerHub"> 
+      <!-- MAPBOX -->
+      <div id="map">
+        <script>
+          mapboxgl.accessToken = 'pk.eyJ1IjoiZmNheWF5byIsImEiOiJjbHJ5MmR3bjgxZWp4MmpwYndpejRzc2pqIn0.WnTM1dHJuY92ek7FPXHE_w';
+          const map = new mapboxgl.Map({
+          container: 'map', // container ID
+          center: [-74.5, 40], // starting position [lng, lat]
+          zoom: 9 // starting zoom
+          });
+        </script>
       </div>
-    </div>
+      <!-- //////// -->
 
-    <input type="text" id="locationInput" placeholder="Enter location">
-    <button onclick="getWeather()">Go</button>
+      <!-- CURRENTE CITY DATA -->
+      <div id="citySpotlight"> 
+        <div class="liveValue" id="cityName"></div> 
+        <div class="liveValue" id="descriptor"></div> 
+        <div class="liveValue" id="currentTemp"></div> 
+        <div class="liveValue" id="minTemp"></div> 
+        <div class="liveValue" id="maxTemp"></div> 
+        <input type="text" id="locationInput" placeholder="Enter location">
+        <button onclick="getWeather()">Go</button>
+      </div>
+      <!-- //////// -->
+    </div>
 
     <div class="grid-container">
       <div class="grid-item" id="feelsLike"></div>
