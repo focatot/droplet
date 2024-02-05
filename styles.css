@@ -1,144 +1,119 @@
-body {
-  background-color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  font-size: 16px;
-}
+/*---GLOBAL VALUES---*/
 
-.weatherDashboard {
-  width: 80%;
-  margin: 8% auto auto;
-  color: #ccc;
-  font-family: 'Roboto', sans-serif;
-}
-
-#liveValueGroup {
-  position: absolute;
-  bottom: 0%;
-}
-
-/* .liveValue {
-  margin: 0 0 0 1%;
-  padding: 0%;
-} */
-
-.liveValue h1, p {
-  margin: 0 0 10px 10px;
-} 
-
-.grid-container {
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 30px 50px;
-  margin: 100px auto;
-}
-
-.grid-item {
-  background-color: rgba(128, 128, 128, 0.8);
-  padding: 20px;
-  text-align: center;
-  color: white;
-  border-radius: 3px;
-  width: 1fr;
-  height: 80px;
-  backdrop-filter: blur(5px);
-  transition: background-color 0.3s ease-in-out;
-}
-
-.grid-item:hover {
-  background-color: rgba(128, 128, 128, 1);
-}
-
-@media (max-width: 600px) {
-  .grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust column width for smaller screens */
+  body {
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 16px;
   }
-}
 
-/*--------VALUES--------*/
+  @media (max-width: 600px) {
+    .grid-container {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust column width for smaller screens */
+    }
+  }
 
-#currentTemp {
- font-size: 40px;
-}
+  /* SEACRH BOX */
+  /*MIGRATE TO NON-GLOBAL*/
 
+  form { /* This bit sets up the horizontal layout */
+    display:flex;
+    flex-direction:row;
+    border:1px solid grey;
+  }
+  
+  input {
+    flex-grow:2; /* Tell the input to use all the available space */
+    border:none; /* And hide the input's outline, so the form looks like the outline */
+    background-color: #333;
+  }
+  
+  input:focus {
+    outline: none; 
+    color:white; /* font color inside search box while typing */
+  }
+  
+  form:focus-within { /* Add the focus effect to the form so it contains the button */
+    outline: 1px solid black
+  }
+  
+  button {
+    border:1px solid #1b1b1b37;
+    background:transparent;
+    color:white;
+  }
+/*---///GLOBAL VALUES///---*/
 
-/* WIDGET */
+/*---WEATHER DASHBOARD---*/
 
+  .weatherDashboard { /* Contains main dashboard with map and current values as well as the main grid */ 
+    width: 80%;
+    margin: 8% auto auto;
+    color: #ccc;
+    font-family: 'Roboto', sans-serif;
+  }
 
-    /* Styling the visualizerHub container */
-    .visualizerHub {
+    .visualizerHub { /* Contains map, searchbox and current values for city */
       display: flex;
       width: 100%;
       margin: auto auto;
-      border: 1px solid black; /* Add a border for rounded corners */
       border-radius: 10px;
       overflow: hidden; /* To ensure border-radius is applied to child elements */
     }
+
+      #map, #citySpotlight { /* Styling the map and citySpotlight divs */
+        width: 50%; /* Each div takes 50% of the container */
+        height: 300px; 
+        overflow: hidden;
+        border: 1px solid #ccc; /* weird border shadow*/
+      }
+
+      #citySpotlight { /* Styling for citySpotlight content */
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+
+        .pac-container { /*Google places dropdown suggestion menu for cityname*/
+          background-color: #ccc;
+        }  
+
+        #liveValueGroup {
+          position: absolute;
+        bottom: 0%;
+        }
+
+        .liveValue p {
+          margin: 0 0 10px 10px;
+        } 
+
+          #currentTemp {
+            font-size: 40px;
+          }
     
-
-    /* Styling the map and citySpotlight divs */
-    #map, #citySpotlight {
-      width: 50%; /* Each div takes 50% of the container */
-      height: 300px; 
-      overflow: hidden;
-    }
-
-    /* Optional: Add some styling to the divs for better visualization */
-    #map, #citySpotlight {
-      border: 1px solid #ccc;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Styling for citySpotlight content */
-    #citySpotlight {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-
-    }
-
-
-    /* NEEDS IDENTING AND REORG */
-
-    /* SEACRH BOX */
-
-      form {
-        /* This bit sets up the horizontal layout */
-        display:flex;
-        flex-direction:row;
+        .grid-container {
+          display: grid;
+          grid-template-rows: repeat(2, 1fr);
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+          gap: 30px 50px;
+          margin: 100px auto;
+        }
         
-        /* This bit draws the box around it */
-        border:1px solid grey;
-      
-        /* I've used padding so you can see the edges of the elements. */
-        padding:1px;
-      }
-      
-      input {
-        /* Tell the input to use all the available space */
-        flex-grow:2;
-        /* And hide the input's outline, so the form looks like the outline */
-        border:none;
-        background-color: #333;
-      }
-      
-      input:focus {
-        outline: none; 
-        color:white; /* font color inside search box while typing */
-      }
-      
-      /* Add the focus effect to the form so it contains the button */
-      form:focus-within { 
-        outline: 1px solid black
-      }
-      
-      button {
-        /* Just a little styling to make it pretty */
-        border:2px solid #1b1b1b;
-        background:#1b1b1b;
-        color:white;
+        .grid-item {
+          background-color: rgba(128, 128, 128, 0.8);
+          padding: 20px;
+          text-align: center;
+          color: white;
+          border-radius: 3px;
+          width: 1fr;
+          height: 80px;
+          backdrop-filter: blur(5px);
+          transition: background-color 0.3s ease-in-out;
+        }
         
-      }
+        .grid-item:hover {
+          background-color: rgba(128, 128, 128, 1);
+        }   
+/*---///WEATHER DASHBOAD///---*/
