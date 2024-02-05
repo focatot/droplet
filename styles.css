@@ -67,7 +67,7 @@
         width: 50%; /* Each div takes 50% of the container */
         height: 300px; 
         overflow: hidden;
-        border: 1px solid #ccc; /* weird border shadow*/
+        border: 1px solid #404040; /* weird border shadow*/
       }
 
       #citySpotlight { /* Styling for citySpotlight content */

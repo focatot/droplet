@@ -11,6 +11,9 @@
   <!--MAPBOX-->
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+  <!---GEOCODER-->
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
   <!--///////-->
 </head>
 <body>
@@ -24,9 +27,16 @@
           const map = new mapboxgl.Map({
           container: 'map', // container ID
           style: "mapbox://styles/mapbox/dark-v11",
-          center: [-66.899732, 10.471725], // starting position [lng, lat] NEEDS INTEGRATION
+          center: [-66.915660, 10.505404], // starting position [lng, lat] NEEDS INTEGRATION
           zoom: 10 // starting zoom 10 for city
           });
+          // Add the control to the map.
+          map.addControl(
+            new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl
+            })
+          );
         </script>
       </div>
       <!-- //////// -->
