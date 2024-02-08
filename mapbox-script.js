@@ -3,11 +3,14 @@
 
 /////////// MAPBOX() /////////
 
-// Access variables
+// Mapbox key
 mapboxgl.accessToken = 'pk.eyJ1IjoiZmNheWF5byIsImEiOiJjbHJ5MmR3bjgxZWp4MmpwYndpejRzc2pqIn0.WnTM1dHJuY92ek7FPXHE_w';
+// Mapbox theme
 mapboxStyle = "mapbox://styles/mapbox/dark-v11";
+// Predefined init request for weather dashboard
+var cityBox = ("Caracas"); // SHOULD WORK IN SYNC WITH GETWEATHERBYCITY ALSO CHECK CENTER IN MAP INIT 
 
-// Init map
+// Init map 
 const map = new mapboxgl.Map({
     container: 'map', // container ID
     style: mapboxStyle, // dark mode :pp 
@@ -15,7 +18,7 @@ const map = new mapboxgl.Map({
     zoom: 10, // raise to zoom in 
 });
 
-// Init geocoder
+// Init geocoder 
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     mapboxgl: mapboxgl,
@@ -23,15 +26,13 @@ var geocoder = new MapboxGeocoder({
     types: 'place' // Restrict search results to only include places (cities)
 });
 
-// Init search box control
+// Init search box control 
 map.addControl(geocoder);
 
-// Predefined init request
-// SHOULD WORK IN SYNC WITH GETWEATHERBYCITY ALSO CHECK CENTER IN MAP INIT 
-var cityBox = ("Caracas"); 
 
 // Listen for the 'result' event
 geocoder.on('result', function(e) {
+console.log(e.result)
 
 // Extract the selected place name from the event object
 const selectedPlaceName = e.result.text;
@@ -45,6 +46,9 @@ fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${selectedPlaceName}.js
     console.log("fetching location for", cityBox)
     getWeatherByCity(selectedPlaceName);
     console.log('location fetched');
+
+    const coordBox = data.features[0].center;
+    console.log(cityBox, "rests at", coordBox)
     })
 
     .catch(error => {
@@ -84,7 +88,8 @@ function updateWeatherInfo(weatherData) {
     const cloud = document.getElementById('cloudiness');
     const rise = document.getElementById('sunrise');
     const set = document.getElementById('sunset');
-  
+    
+    // Assign JSON values from api call to html elements
     city.innerHTML = `<p>${weatherData.name}, ${weatherData.sys.country}<p>`;
     description.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
     temp.innerHTML = `<p>${weatherData.main.temp.toFixed(0)}&deg;</p>`;
