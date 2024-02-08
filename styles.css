@@ -14,36 +14,6 @@
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust column width for smaller screens */
     }
   }
-
-  /* SEACRH BOX */
-  /*MIGRATE TO NON-GLOBAL*/
-
-  form { /* This bit sets up the horizontal layout */
-    display:flex;
-    flex-direction:row;
-    border:1px solid grey;
-  }
-  
-  input {
-    flex-grow:2; /* Tell the input to use all the available space */
-    border:none; /* And hide the input's outline, so the form looks like the outline */
-    background-color: #333;
-  }
-  
-  input:focus {
-    outline: none; 
-    color:white; /* font color inside search box while typing */
-  }
-  
-  form:focus-within { /* Add the focus effect to the form so it contains the button */
-    outline: 1px solid black
-  }
-  
-  button {
-    border:1px solid #1b1b1b37;
-    background:transparent;
-    color:white;
-  }
 /*---///GLOBAL VALUES///---*/
 
 /*---WEATHER DASHBOARD---*/
@@ -55,7 +25,7 @@
     font-family: 'Roboto', sans-serif;
   }
 
-    .visualizerHub { /* Contains map, searchbox and current values for city */
+    .weatherStage { /* Contains map, searchbox and current values for city */
       display: flex;
       width: 100%;
       margin: auto auto;
@@ -73,45 +43,36 @@
       #citySpotlight { /* Styling for citySpotlight content */
         display: flex;
         flex-direction: column;
-        position: relative;
       }
 
-        .pac-container { /*Google places dropdown suggestion menu for cityname*/
-          background-color: #ccc;
-        }  
-
-        #liveValueGroup {
-          position: absolute;
-        bottom: 0%;
-        }
-
-        .liveValue p {
+        .liveValue {
           margin: 0 0 10px 10px;
+          color: white;
         } 
 
           #currentTemp {
             font-size: 40px;
           }
-    
-        .grid-container {
-          display: grid;
-          grid-template-rows: repeat(2, 1fr);
-          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-          gap: 30px 50px;
-          margin: 100px auto;
-        }
+
+    .grid-container {
+      display: grid;
+      grid-template-rows: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 30px 50px;
+      margin: 100px auto;
+    }
         
-        .grid-item {
-          background-color: rgba(128, 128, 128, 0.8);
-          padding: 20px;
-          text-align: center;
-          color: white;
-          border-radius: 3px;
-          width: 1fr;
-          height: 80px;
-          backdrop-filter: blur(5px);
-          transition: background-color 0.3s ease-in-out;
-        }
+     .grid-item {
+        background-color: rgba(128, 128, 128, 0.8);
+        padding: 20px;
+        text-align: center;
+        color: white;
+        border-radius: 3px;
+        width: 1fr;
+        height: 80px;
+        backdrop-filter: blur(5px);
+        transition: background-color 0.3s ease-in-out;
+      }
         
         .grid-item:hover {
           background-color: rgba(128, 128, 128, 1);

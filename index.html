@@ -9,49 +9,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <!--MAPBOX-->
-  <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
-  <!---GEOCODER-->
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
   <!--///////-->
 </head>
 <body>
+
   <div class="weatherDashboard"> 
 
-    <div class="visualizerHub"> 
+    <div class="weatherStage"> 
       <!-- MAPBOX -->
-      <div id="map">
-        <script>
-          mapboxgl.accessToken = 'pk.eyJ1IjoiZmNheWF5byIsImEiOiJjbHJ5MmR3bjgxZWp4MmpwYndpejRzc2pqIn0.WnTM1dHJuY92ek7FPXHE_w';
-          const map = new mapboxgl.Map({
-          container: 'map', // container ID
-          style: "mapbox://styles/mapbox/dark-v11",
-          center: [-66.915660, 10.505404], // starting position [lng, lat] NEEDS INTEGRATION
-          zoom: 10 // starting zoom 10 for city
-          });
-          // Add the control to the map.
-          map.addControl(
-            new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl
-            })
-          );
-        </script>
-      </div>
+      <div id="map"></div>
       <!-- //////// -->
 
       <!-- CURRENTE CITY DATA -->
       <div id="citySpotlight"> 
-        <form action="">
-          <input type="text" id="locationInput" placeholder="Enter location">
-          <button onclick="getWeather()">Go</button>
-        </form>
-        <div id="liveValueGroup">
-          <div class="liveValue" id="currentTemp"></div> 
-          <div class="liveValue" id="cityName"></div> 
-          <div class="liveValue" id="descriptor"></div> 
-        </div>
+        <div class="liveValue" id="currentTemp"></div> 
+        <div class="liveValue" id="cityName"></div> 
+        <div class="liveValue" id="descriptor"></div> 
       </div>
       <!-- //////// -->
     </div>
@@ -69,6 +48,12 @@
       <div class="grid-item" id="sunset"></div>
     </div>
   </div> 
+
+  <!-- Mapbox JS -->
+  <script src="mapbox-script.js"></script>
+
+  <!-- Main JS -->
   <script type="module" src="script.js" ></script>
+
 </body>
 </html>
