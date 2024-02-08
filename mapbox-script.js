@@ -41,7 +41,7 @@ fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${selectedPlaceName}.js
     .then(response => response.json())
     .then(data => {
     // Extract the city name from the API response
-    const cityBox = data.features[0].text;
+    const cityBox = data.features[0].place_name;
     console.log("MAPBOX says: fetching location for", cityBox)
     getWeatherByCity(selectedPlaceName);
     console.log('MAPBOX says: location fetched');
@@ -92,7 +92,7 @@ function getWeatherElements() {
 // This function updates the HTML content of weather-related elements based on the received weather data.
 function updateWeatherInfo(weatherData) {
     const weatherElements = getWeatherElements();
-        weatherElements.city.innerHTML = `<p>${weatherData.name}<p>`;
+        weatherElements.city.innerHTML = `<p>${weatherData.name}, ${weatherData.sys.country}<p>`;
         weatherElements.description.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
         weatherElements.temp.innerHTML = `<p>${weatherData.main.temp.toFixed(0)}&deg;</p>`;
         weatherElements.feels.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like.toFixed(0)} &deg;C</p>`;
