@@ -1,11 +1,10 @@
 // mapbox-script.js
 
-
-/////////// MAPBOX() /////////
-
 // Mapbox key
 mapboxgl.accessToken = 'pk.eyJ1IjoiZmNheWF5byIsImEiOiJjbHJ5MmR3bjgxZWp4MmpwYndpejRzc2pqIn0.WnTM1dHJuY92ek7FPXHE_w';
 
+// OpenWM key
+openwmAccessToken = '4c2ea446b8fba1b6f13c58bda72e19b2';
 
 // Init map 
 const map = new mapboxgl.Map({
@@ -27,47 +26,42 @@ var geocoder = new MapboxGeocoder({
 map.addControl(geocoder);
 
 
-// Listen for the 'result' event
+// Listen for the 'result' event and init weather request
 geocoder.on('result', function(e) {
 
-// Extract the selected place name from the event object
-const selectedPlaceName = e.result.text;
-  
-// Fetch data from the Mapbox API using the selected place name
-fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${selectedPlaceName}.json?access_token=${mapboxgl.accessToken}`)
-    .then(response => response.json())
-    .then(data => {
-        console.log("fetching location..."); // Extract the city name from the API response
-        var cityBox = data.features[0].place_name; // Extract the city name from the API response
-        var [longitude, latitude] = data.features[0].center; // Extract the coordinates from the API response
-        console.log("location fetched for", cityBox);
-        console.log(longitude, latitude);
-        getWeatherByCity(selectedPlaceName, latitude, longitude); // Call getWeatherByCity with latitude and longitude values
-    })
-
-    .catch(error => {
-        console.error('Error fetching data from Mapbox API:', error);
-    });
+    // Extract the selected place name from the event object
+    const selectedPlaceName = e.result.text;
+    
+    // Fetch data from the Mapbox API using the selected place name
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${selectedPlaceName}.json?access_token=${mapboxgl.accessToken}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("fetching location..."); // Extract the city name from the API response
+            var cityBox = data.features[0].place_name; // Extract the city name from the API response
+            var [longitude, latitude] = data.features[0].center; // Extract the coordinates from the API response
+            console.log("location fetched for", cityBox);
+            console.log(longitude, latitude);
+            console.log('fetching weather for', cityBox);
+            // Fetch data from the OpenWM API using the selected coordinates
+            return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`);
+        })
+        .then(response => response.json())
+        .then(weatherData => {
+            console.log("weather fetched");
+            updateWeatherInfo(weatherData);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 });
 
-/////////// MAPBOX(/) /////////
+// Init weather request 
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=caracas&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`) // Based in default map center coordinates "caracas"
+.then(response => response.json())
+.then(updateWeatherInfo)
+.catch(error => console.log('error', error));
 
-/////////// OPENWEATHERMAP() /////////
-  
-// setting up API key, constructing API URL, and fetching weather data
-function getWeatherByCity(cityBox, latitude, longitude) {
-    const apiKey = '4c2ea446b8fba1b6f13c58bda72e19b2';
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-
-    console.log('fetching weather for', cityBox);
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(updateWeatherInfo)
-      .then(response => console.log("weather fetched"))
-      .catch(error => console.log('error', error));
-}
-
-// Update weather information on the webpage
+// Update dashboard with retrieved values
 function updateWeatherInfo(weatherData) {
     const city = document.getElementById('cityName');
     const description = document.getElementById('descriptor');
@@ -82,7 +76,6 @@ function updateWeatherInfo(weatherData) {
     const cloud = document.getElementById('cloudiness');
     const rise = document.getElementById('sunrise');
     const set = document.getElementById('sunset');
-    
     
     // Assign JSON values from api call to html elements
     city.innerHTML = `<p>${weatherData.name}, ${weatherData.sys.country}<p>`;
@@ -99,11 +92,3 @@ function updateWeatherInfo(weatherData) {
     rise.innerHTML = `<p>Sunrise:</br>${new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>`;
     set.innerHTML = `<p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
 }
-
-// Init weather request 
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=caracas&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`) // Based in default map center coordinates "caracas"
-.then(response => response.json())
-.then(updateWeatherInfo)
-.catch(error => console.log('error', error));
-
-/////////// OPENWEATHERMAP(/) /////////
