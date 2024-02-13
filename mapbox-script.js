@@ -25,6 +25,39 @@ var geocoder = new MapboxGeocoder({
 // Init search box control 
 map.addControl(geocoder);
 
+// Add a click event listener to the map
+map.on('click', function(e) {
+
+    const clickedCoordinates = e.lngLat; // Extract the clicked coordinates
+    const longitude = clickedCoordinates.lng; // Store lng
+    const latitude = clickedCoordinates.lat; // Store lat
+
+    // Reverse geocode the clicked coordinates to retrieve the city name
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`)
+        .then(response => response.json())
+        .then(data => {
+            const city = data.features[0].context.find(item => item.id.includes('place')).text; // Extract the city name from the API response
+            
+            // Fetch weather data for the clicked coordinates
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`)
+                .then(response => response.json())
+                .then(weatherData => {
+                    console.log("weather fetched from globe click for", city);
+                    console.log(longitude, latitude);
+                    console.log(weatherData.main.temp, weatherData.weather[0].description);
+                    updateWeatherInfo(weatherData, city); // Update the UI with weather data for the clicked location
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+
+
 // Listen for the 'result' event and init weather request
 geocoder.on('result', function(e) {
 
@@ -36,16 +69,16 @@ geocoder.on('result', function(e) {
         .then(response => response.json())
         .then(data => {
             console.log("fetching location..."); // Extract the city name from the API response
-            var cityBox = data.features[0].place_name; // Extract the city name from the API response
+            var city = data.features[0].place_name; // Extract the city name from the API response
             var [longitude, latitude] = data.features[0].center; // Extract the coordinates from the API response
-            console.log("location fetched for", cityBox);
+            console.log("location fetched for", city);
             console.log(longitude, latitude);
             console.log("fetching weather...");
             // Fetch data from the OpenWM API using the selected coordinates
             return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`)
                 .then(response => response.json())
                 .then(weatherData => {
-                    console.log("weather fetched for", cityBox);
+                    console.log("weather fetched for", city);
                     console.log(weatherData.main.temp, weatherData.weather[0].description);
                     updateWeatherInfo(weatherData, selectedPlaceName);
                 })
@@ -59,8 +92,8 @@ geocoder.on('result', function(e) {
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=caracas&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`) // Based in default map center coordinates "caracas"
     .then(response => response.json())
     .then(weatherData => {
-        const cityBox = "Caracas, Capital District, Venezuela"; // Set the cityBox manually since it's not extracted from geocoder in this fetch
-        updateWeatherInfo(weatherData, cityBox);
+        const city = "Caracas, Capital District, Venezuela"; // Set the city manually since it's not extracted from geocoder in this fetch
+        updateWeatherInfo(weatherData, city);
     })
     .catch(error => console.log('error', error));
 
