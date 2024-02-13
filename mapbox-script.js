@@ -36,8 +36,9 @@ map.on('click', function(e) {
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`)
         .then(response => response.json())
         .then(data => {
-            const city = data.features[0].context.find(item => item.id.includes('place')).text; // Extract the city name from the API response
-            
+            // Extract the place name from the API response
+            const city = data.features[0].place_name;
+
             // Fetch weather data for the clicked coordinates
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`)
                 .then(response => response.json())
@@ -80,7 +81,7 @@ geocoder.on('result', function(e) {
                 .then(weatherData => {
                     console.log("weather fetched for", city);
                     console.log(weatherData.main.temp, weatherData.weather[0].description);
-                    updateWeatherInfo(weatherData, selectedPlaceName);
+                    updateWeatherInfo(weatherData, city);
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -98,32 +99,33 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=caracas&appid=4c2ea446b
     .catch(error => console.log('error', error));
 
 // Update dashboard with retrieved values
-function updateWeatherInfo(weatherData, selectedPlaceName) {
-    const city = document.getElementById('cityName');
-    const description = document.getElementById('descriptor');
-    const temp = document.getElementById('currentTemp');
-    const feels = document.getElementById('feelsLike');
-    const humid = document.getElementById('currentHumid');
-    const min = document.getElementById('minTemp');
-    const max = document.getElementById('maxTemp');
-    const vision = document.getElementById('visibility');
-    const wind = document.getElementById('windSpd');
-    const windDir = document.getElementById('windDirection');
-    const cloud = document.getElementById('cloudiness');
-    const rise = document.getElementById('sunrise');
-    const set = document.getElementById('sunset');
-    // Assign JSON values from api call to html elements
-    city.innerHTML = `<p>${selectedPlaceName}<p>`;
-    description.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
-    temp.innerHTML = `<p>${weatherData.main.temp.toFixed(0)}&deg;</p>`;
-    feels.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like.toFixed(0)} &deg;C</p>`;
-    humid.innerHTML = `<p>Humidity:</br>${weatherData.main.humidity}%</p>`;
-    min.innerHTML = `<p>L: ${weatherData.main.temp_min.toFixed(0)}&deg;</p>`;
-    max.innerHTML = `<p>H: ${weatherData.main.temp_max.toFixed(0)}&deg;</p>`;
-    vision.innerHTML = `<p>Visibility:</br>${(weatherData.visibility / 1000).toFixed(1)} km</p>`;
-    wind.innerHTML = `<p>Wind Speed:</br>${(weatherData.wind.speed * 1.60934).toFixed(0)} km/h</p>`;
-    windDir.innerHTML = `<p>Wind Direction:</br>${weatherData.wind.deg} &deg;</p>`;
-    cloud.innerHTML = `<p>Cloudiness:</br>${weatherData.clouds.all}%</p>`;
-    rise.innerHTML = `<p>Sunrise:</br>${new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>`;
-    set.innerHTML = `<p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
+function updateWeatherInfo(weatherData, city, country) {
+    const cityNameElement = document.getElementById('cityName');
+    const descriptionElement = document.getElementById('descriptor');
+    const tempElement = document.getElementById('currentTemp');
+    const feelsElement = document.getElementById('feelsLike');
+    const humidElement = document.getElementById('currentHumid');
+    const minElement = document.getElementById('minTemp');
+    const maxElement = document.getElementById('maxTemp');
+    const visionElement = document.getElementById('visibility');
+    const windElement = document.getElementById('windSpd');
+    const windDirElement = document.getElementById('windDirection');
+    const cloudElement = document.getElementById('cloudiness');
+    const riseElement = document.getElementById('sunrise');
+    const setElement = document.getElementById('sunset');
+
+    // Assign values to HTML elements
+    cityNameElement.innerHTML = `<p>${city}</p>`;
+    descriptionElement.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
+    tempElement.innerHTML = `<p>${weatherData.main.temp.toFixed(0)}&deg;</p>`;
+    feelsElement.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like.toFixed(0)} &deg;C</p>`;
+    humidElement.innerHTML = `<p>Humidity:</br>${weatherData.main.humidity}%</p>`;
+    minElement.innerHTML = `<p>L: ${weatherData.main.temp_min.toFixed(0)}&deg;</p>`;
+    maxElement.innerHTML = `<p>H: ${weatherData.main.temp_max.toFixed(0)}&deg;</p>`;
+    visionElement.innerHTML = `<p>Visibility:</br>${(weatherData.visibility / 1000).toFixed(1)} km</p>`;
+    windElement.innerHTML = `<p>Wind Speed:</br>${(weatherData.wind.speed * 1.60934).toFixed(0)} km/h</p>`;
+    windDirElement.innerHTML = `<p>Wind Direction:</br>${weatherData.wind.deg} &deg;</p>`;
+    cloudElement.innerHTML = `<p>Cloudiness:</br>${weatherData.clouds.all}%</p>`;
+    riseElement.innerHTML = `<p>Sunrise:</br>${new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>`;
+    setElement.innerHTML = `<p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
 }
