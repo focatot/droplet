@@ -1,55 +1,49 @@
-/*---GLOBAL VALUES---*/
-
+/* Global */
   body {
     background-color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    font-size: 16px;
+    position: relative;
   }
 
   @media (max-width: 600px) {
     .grid-container {
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust column width for smaller screens */
     }
+
+    .weatherDashboard {
+      width: 90%; /* Adjust width for smaller screens */
+    }
   }
-/*---///GLOBAL VALUES///---*/
 
-/*---WEATHER DASHBOARD---*/
-
+/* Dashboard */
   .weatherDashboard { /* Contains main dashboard with map and current values as well as the main grid */ 
     width: 80%;
     margin: 8% auto auto;
     color: #ccc;
     font-family: 'Roboto', sans-serif;
   }
-
     .weatherStage { /* Contains map, searchbox and current values for city */
       display: flex;
       width: 100%;
       margin: auto auto;
       border-radius: 10px;
       overflow: hidden; /* To ensure border-radius is applied to child elements */
+      border: 1px solid #404040;
     }
-
-      #map, #citySpotlight { /* Styling the map and citySpotlight divs */
-        width: 50%; /* Each div takes 50% of the container */
-        height: 300px; 
-        overflow: hidden;
-        border: 1px solid #404040; /* weird border shadow*/
+      #map {
+        width: 50%;
+        height: 300px; /* Adjust height as needed */
+        
       }
-
       #citySpotlight { /* Styling for citySpotlight content */
         display: flex;
         flex-direction: column;
+        width: 50%;
+        height: 300px; /* Adjust height as needed */
       }
-
         .liveValue {
           margin: 0 0 10px 10px;
           color: white;
         } 
-
           #currentTemp {
             font-size: 40px;
           }
@@ -77,4 +71,25 @@
         .grid-item:hover {
           background-color: rgba(128, 128, 128, 1);
         }   
-/*---///WEATHER DASHBOAD///---*/
+
+
+/* ///////////////////// */
+.mapboxgl-ctrl-bottom-left { /* Hide map logo */
+ visibility: hidden;
+}
+
+.mapboxgl-ctrl-bottom-right { /* Hide map attributions */
+  visibility: hidden;
+ } 
+
+/* Mapbox Geocoder */
+.geocoder {
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -60px; /* Adjust as needed */
+}
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
