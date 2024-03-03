@@ -119,7 +119,6 @@ function updateWeatherInfo(weatherData, cityName) { // Update dashboard with ret
     const maxElement = document.getElementById('maxTemp');
     const visionElement = document.getElementById('visibility');
     const windElement = document.getElementById('windSpd');
-    const windDirElement = document.getElementById('windDirection');
     const cloudElement = document.getElementById('cloudiness');
     const riseElement = document.getElementById('sunrise');
     const setElement = document.getElementById('sunset');
