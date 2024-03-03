@@ -1,49 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Garua</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preload" href="styles.css" as="style" onload="this.rel='stylesheet'"><noscript><link rel="stylesheet" href="styles.css"></noscript>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <title>Garua</title>
+  <!--GOOGLE FONTS--><link rel="preconnect" href="https://fonts.googleapis.com">
+  <!--GOOGLE FONTS--><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!--GOOGLE FONTS--><link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <!--MAPBOX--><script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+  <!--MAPBOX--><script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <!--MAPBOX--><link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
+  <!--MAPBOX--><link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 </head>
 <body>
-  <div class="mainLocator">
 
-    <div id="currentWeatherWidget">
-      <div class="location-div">
-        <div class="mainIndicator" id="cityName"></div>
-        <div class="mainIndicator" id="descriptor"></div>
-      </div>
+<!--///////-->
+<!--///////-->
+<!--///////-->
+<!--///////-->
+<!--///////-->
 
-      <div class="temp-div">
-        <div class="maintemp">
-          <div class="mainIndicator" id="currentTemp"></div>
-        </div>
-        <div id="minMaxTemp">
-          <div class="mainIndicator" id="minTemp"></div>
-          <div class="mainIndicator" id="maxTemp"></div>
-        </div>
+<div class="container">
+  <div class="left">
+    <div class="left-top">
+      <div id="geocoder" class="geocoder"></div>
+      <div id="citySpotlight"> 
+        <div class="liveValue" id="currentTemp"></div> 
+        <div class="liveValue" id="cityName"></div> 
+        <div class="liveValue" id="descriptor"></div> 
       </div>
     </div>
-
-    <input type="text" id="locationInput" placeholder="Enter location">
-    <button onclick="getWeather()">Go</button>
-    <div class="grid-container">
-      <div class="grid-item" id="feelsLike"></div>
-      <div class="grid-item" id="currentHumid"></div>
-      <div class="grid-item" id="visibility"></div>
-      <div class="grid-item" id="windSpd"></div>
-      <div class="grid-item" id="windDirection"></div>
-      <div class="grid-item" id="cloudiness"></div>
-      <div class="grid-item" id="sunrise"></div>
-      <div class="grid-item" id="sunset"></div>
+    <div class="left-bottom">
+      <div id="map"></div>
     </div>
   </div>
+
+  <div class="right">
+    <div class="item" id="minTemp"></div>
+    <div class="item" id="maxTemp"></div>
+    <div class="item" id="feelsLike"></div>
+    <div class="item" id="currentHumid"></div>
+    <div class="item" id="visibility"></div>
+    <div class="item" id="windSpd"></div>
+    <div class="item" id="cloudiness"></div>
+    <div class="item" id="sunset"></div>
+    <div class="item" id="sunrise"></div>
+  </div>
+</div>
+
+<!--///////-->
+<!--///////-->
+<!--///////-->
+<!--///////-->
+<!--///////-->
+<!--///////-->
+
+  <!-- Mapbox JS -->
+  <script src="mapbox-script.js"></script>
+
+  <!-- Main JS -->
   <script type="module" src="script.js" ></script>
+
 </body>
 </html>
-
-<!---TEST FOR BRANCHING BEFORE CHANGES TO API HANDLING-->
