@@ -1,8 +1,8 @@
 /* Global */
-  body {
-    background-color: #222222;
-    
-  }
+body {
+  background-color: #222222;
+}
+
 
 /* //////////////////////////////// */
 /* //////////////////////////////// */
@@ -18,44 +18,63 @@
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* Split into two columns */
-  height: 90vh; /* Adjust as needed */
+  grid-template-columns: 1fr 2fr;
+  /* Split into two columns */
+  height: 90vh;
+  /* Adjust as needed */
   width: 85%;
-  margin:  35px auto;
+  margin: 35px auto;
   gap: 10px;
 }
 
 .left {
   display: grid;
-  grid-template-rows: 1fr 1fr; /* Split left into two rows */
+  grid-template-rows: 1fr 1fr;
+  /* Split left into two rows */
   border-radius: 10px;
   overflow: hidden;
 }
 
 .left-top,
 .left-bottom {
-  background-color: #282828; /* Placeholder background color */
+  background-color: #282828;
+  /* Placeholder background color */
   overflow: hidden;
+  position: relative;
 }
 
 .right {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  grid-template-rows: repeat(3, 1fr); /* Three rows */
-  gap: 5px; /* Adjust gap between items as needed */
+  grid-template-columns: repeat(3, 1fr);
+  /* Three columns */
+  grid-template-rows: repeat(3, 1fr);
+  /* Three rows */
+  gap: 5px;
+  /* Adjust gap between items as needed */
   background-color: #3b3636;
   border-radius: 10px;
-  border: 10px solid rgb(61, 54, 54); /* Vertical divider */
+  border: 10px solid rgb(61, 54, 54);
+  /* Vertical divider */
 }
 
 .item {
-  background-color: #4e4848; /* Placeholder background color */
   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   border-radius: 10px;
-  height: 100%;
-  width: 100%;
+  height: 220px;
+  width: 230px;
+
+  background-color: #4e4848;
+  font-family: Helvetica, Arial;
+  color: white;
+  text-align: center;
+  line-height: 1.5;
 }
 
+.item p {}
 
 /* //////////////////////////////// */
 /* //////////////////////////////// */
@@ -71,35 +90,50 @@
 
 
 #map {
- width: 100%;
-height: 100%; /* Adjust height as needed */      
+  width: 100%;
+  height: 100%;
+  /* Adjust height as needed */
 }
-#citySpotlight { /* Styling for citySpotlight content */
-  display: flex;
+
+#citySpotlight {
+  /* Styling for citySpotlight content */
+  display: absolute;
+  bottom: 0;
   flex-direction: column;
   width: 50%;
-  height: 300px; /* Adjust height as needed */
+  height: fit-content;
+  /* Adjust height as needed */
+  margin: 4px;
 }
+
 .liveValue {
-  margin: 0 0 10px 10px;
   color: white;
-} 
+  font-family: Helvetica, Arial;
+}
+
+.liveValue p {
+  margin: 10px 0 0 0;
+  bottom: 0;
+}
+
 #currentTemp {
-  font-size: 40px;
+  font-size: 35px;
 }
 
-.mapboxgl-ctrl-bottom-left { /* Hide map logo */
- visibility: hidden;
-}
-
-.mapboxgl-ctrl-bottom-right { /* Hide map attributions */
+.mapboxgl-ctrl-bottom-left {
+  /* Hide map logo */
   visibility: hidden;
- } 
+}
+
+.mapboxgl-ctrl-bottom-right {
+  /* Hide map attributions */
+  visibility: hidden;
+}
 
 /* Mapbox Geocoder */
 .geocoder {
   z-index: 10;
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
 }
 
