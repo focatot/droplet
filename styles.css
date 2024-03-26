@@ -1,16 +1,23 @@
-/* Styling*/
+/*************** Media queries ***************/
+
+@media screen {}
+
+/*************** Variables ***************/
 
 :root {
-  --background-color: #36343a;
-  --container-color: #27262aab;
-  --button-color: #3F3C44;
+  --background-color: #dddddd;
+  --container-color: #78696469;
+  --button-color: #78696469;
+  --primary-text-color: #5b5858;
 }
 
-/* //////////////////////////////// */
+/*************** HTML tags ***************/
 
 body {
   background-color: var(--background-color);
 }
+
+/*************** Structure ***************/
 
 .container {
   display: grid;
@@ -23,11 +30,21 @@ body {
 }
 
 .left {
+  /*Alignement*/
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  border-radius: 10px;
   height: inherit;
   overflow: hidden;
+
+  /*Measures*/
+  width: 396px;
+  grid-template-rows: 1fr 1fr;
+
+  /*Style*/
+  border-radius: 8px;
+  border: solid 1px rgba(133, 133, 133, 0.71);
+  box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
 }
 
 .left-top,
@@ -38,48 +55,57 @@ body {
 }
 
 .right {
-  background-color: var(--container-color);
   height: inherit;
-  border-radius: 10px;
-  overflow: hidden;
+  width: 793px;
+  border-radius: 8px;
+  /* overflow: hidden; */
+}
+
+/*************** OWMap ***************/
+
+.item {
+  /*Alignement*/
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /*Measures*/
+  border-radius: 8px;
+  height: 130px;
+  width: 200px;
+
+  /*Style*/
+  background-color: var(--button-color);
+  font-family: Helvetica, Arial;
+  color: var(--primary-text-color);
+  text-align: center;
+  line-height: 1.5;
+  border: solid 1px rgba(149, 149, 149, 0.296);
+  -webkit-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
+}
+
+.liveValue {
+  color: var(--primary-text-color);
+  font-family: Helvetica, Arial;
+}
+
+.liveValue p {
+  margin: 10px 0 0 0;
+  bottom: 0;
 }
 
 #row-1 {
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 260px);
   width: 90%;
   height: 300px;
-  /* background-color: var(--container-color); */
-  overflow: hidden;
-  margin: 10px auto;
+  gap: 1px;
+  margin: 0px auto 10px;
 }
-
-
-.item {
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 10px;
-  height: 130px;
-  width: 200px;
-
-  background-color: var(--button-color);
-  font-family: Helvetica, Arial;
-  color: white;
-  text-align: center;
-  line-height: 1.5;
-}
-
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-
-
 
 #feelsLike {
   grid-area: 1/1/2/2;
@@ -99,25 +125,18 @@ body {
 
 #risenset {
   grid-area: 2 / 2 / 3 / 4;
+  grid-column: span 2;
+  justify-content: space-evenly;
+  width: 460px;
 }
 
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-/* //////////////////////////////// */
-
-
-#map {
-  width: 100%;
-  height: 100%;
-  /* Adjust height as needed */
+#currentTemp {
+  font-size: 35px;
 }
 
 #citySpotlight {
   width: 50%;
-  margin: 10px;
+  margin: 10px 10px 20px 10px;
   position: absolute;
   bottom: 0;
 
@@ -132,43 +151,31 @@ body {
 #maxTemp,
 #minTemp {
   margin-right: 10px;
-  /* Add spacing between maxTemp and minTemp */
 }
 
+/*************** Mapbox ***************/
 
-.liveValue {
-  color: white;
-  font-family: Helvetica, Arial;
-}
-
-.liveValue p {
-  margin: 10px 0 0 0;
-  bottom: 0;
-}
-
-#currentTemp {
-  font-size: 35px;
-}
-
-.mapboxgl-ctrl-bottom-left {
-  /* Hide map logo */
-  visibility: hidden;
-}
-
-.mapboxgl-ctrl-bottom-right {
-  /* Hide map attributions */
-  visibility: hidden;
-}
-
-/* Mapbox Geocoder */
 .geocoder {
   z-index: 10;
-  /* position: absolute; */
   width: 100%;
 }
 
 .mapboxgl-ctrl-geocoder {
   min-width: 100% !important;
   max-width: none !important;
+  overflow: hidden;
+}
+
+.mapboxgl-ctrl-bottom-left {
+  visibility: hidden;
+}
+
+.mapboxgl-ctrl-bottom-right {
+  visibility: hidden;
+}
+
+#map {
   width: 100%;
+  height: 100%;
+  /* Adjust height as needed */
 }

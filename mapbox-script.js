@@ -11,7 +11,7 @@ openwmAccessToken = '4c2ea446b8fba1b6f13c58bda72e19b2';
 
 const map = new mapboxgl.Map({ // Init map 
     container: 'map', // container ID
-    style: "mapbox://styles/mapbox/dark-v11", // dark mode :pp 
+    style: "mapbox://styles/mapbox/light-v11", // dark mode :pp 
     center: [139.7263785, 35.6652065], // starting position [lng, lat] NEEDS INTEGRATION TO USER LCATION
     zoom: 10, // raise to zoom in 
     // attributionControl: false,
