@@ -170,7 +170,7 @@ body {
 .mapboxgl-ctrl-geocoder {
   min-width: 100% !important;
   max-width: none !important;
-  overflow: hidden;
+  /*dont use overflow hide in this elements, it hides the suggestions box for results*/
 }
 
 .mapboxgl-ctrl-bottom-left {
