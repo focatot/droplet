@@ -1,9 +1,9 @@
 // mapbox-script.js
 
-// MAPBOX KEY
+// MAPBOX KEY hide!
 mapboxgl.accessToken = 'pk.eyJ1IjoiZmNheWF5byIsImEiOiJjbHJ5MmR3bjgxZWp4MmpwYndpejRzc2pqIn0.WnTM1dHJuY92ek7FPXHE_w';
 
-// OPENWM KEY
+// OPENWM KEY hide!
 openwmAccessToken = '4c2ea446b8fba1b6f13c58bda72e19b2';
 
 
@@ -127,12 +127,81 @@ function updateWeatherInfo(weatherData, cityName) { // Update dashboard with ret
     cityNameElement.innerHTML = `<p>${cityName}</p>`;
     descriptionElement.innerHTML = `<p>${weatherData.weather[0].description}</p>`;
     tempElement.innerHTML = `<p>${weatherData.main.temp.toFixed(0)}&deg;</p>`;
-    feelsElement.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like.toFixed(0)} &deg;C</p>`;
+    feelsElement.innerHTML = `<p>Feels Like:</br>${weatherData.main.feels_like.toFixed(0)}&deg;C</p>`;
     humidElement.innerHTML = `<p>Humidity:</br>${weatherData.main.humidity}%</p>`;
     minElement.innerHTML = `<p>L: ${weatherData.main.temp_min.toFixed(0)}&deg;</p>`;
     maxElement.innerHTML = `<p>H: ${weatherData.main.temp_max.toFixed(0)}&deg;</p>`;
     windElement.innerHTML = `<p>Wind Speed:</br>${(weatherData.wind.speed * 1.60934).toFixed(0)} km/h</p>`;
     cloudElement.innerHTML = `<p>Cloudiness:</br>${weatherData.clouds.all}%</p>`;
     risesetElement.innerHTML = `<p>Sunrise:</br>${new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p></br> <p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
-    // setElement.innerHTML = `<p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
 }
+
+////////////////////////////////////////////////////////////////////////////
+
+// Function to fetch weather forecast data
+async function fetchWeatherForecast(geocoder) {
+    try {
+        const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?lat=40.419508&lon=-3.704281&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric'); // placeholder location PLEASE CHANGE FOR LONG AND LAT VARIABLES
+        if (!response.ok) {
+            throw new Error('Failed to fetch weather forecast');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching weather forecast:', error.message);
+        // Handle error (e.g., display error message to user)
+    }
+}
+
+// Function to render weather forecast widget
+async function renderWeatherWidget() {
+    const weatherData = await fetchWeatherForecast();
+    if (weatherData) {
+        renderForecastCards(weatherData.list);
+    }
+}
+
+// Function to group forecast data by date
+function groupForecastByDate(forecastData) {
+    const groupedForecast = {};
+    forecastData.forEach(day => {
+        const date = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        if (!groupedForecast[date]) {
+            groupedForecast[date] = [];
+        }
+        groupedForecast[date].push(day);
+    });
+    return groupedForecast;
+}
+
+// Function to render forecast cards
+function renderForecastCards(forecastData) {
+    const forecastContainer = document.querySelector('#forecast');
+    const groupedForecast = groupForecastByDate(forecastData);
+
+    for (const date in groupedForecast) {
+        if (groupedForecast.hasOwnProperty(date)) {
+            const dayForecasts = groupedForecast[date];
+            const forecastCard = document.createElement('div');
+            forecastCard.classList.add('forecast-card');
+
+            // Use the first forecast of the day to display general information
+            const firstForecast = dayForecasts[0];
+            const dateTime = new Date(firstForecast.dt * 1000);
+            const formattedDate = dateTime.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            const temperature = firstForecast.main.temp;
+            const weatherDescription = firstForecast.weather[0].description;
+            const weatherIcon = `http://openweathermap.org/img/wn/${firstForecast.weather[0].icon}.png`;
+
+            forecastCard.innerHTML = `
+                <img src="${weatherIcon}" alt="${weatherDescription}">
+                <div class="date-time">${formattedDate}</div>
+                <div class="temperature">${temperature.toFixed(0)}&deg</div>
+            `;
+            forecastContainer.appendChild(forecastCard);
+        }
+    }
+}
+
+// Call the function to render the weather widget
+renderWeatherWidget();
