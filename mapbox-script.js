@@ -9,7 +9,7 @@ openwmAccessToken = '4c2ea446b8fba1b6f13c58bda72e19b2';
 // Initialize MAP
 const map = new mapboxgl.Map({
     container: 'map',
-    style: "mapbox://styles/mapbox/light-v11",
+    style: "mapbox://styles/mapbox/streets-v12",
     center: [139.7263785, 35.6652065], // starting position [lng, lat] NEEDS INTEGRATION TO USER LCATION
     zoom: 10,
     // attributionControl: false,
