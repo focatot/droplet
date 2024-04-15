@@ -51,20 +51,20 @@ function fetchLocationAndWeather(longitude, latitude) {
         });
 }
 
-function findCityCountry(data) {
-    let cityName = "";
-    // Iterate through the features array
-    for (const feature of data.features) {
-        // Access the city and country parts directly from the context array
-        const cityContext = feature.context.find(item => item.id.includes('place'));
-        const countryContext = feature.context.find(item => item.id.includes('country'));
-        if (cityContext && countryContext) {
-            cityName = `${cityContext.text}, ${countryContext.text}`; // Concatenate city and country
-            break; // Break out of the loop once the desired format is found
-        }
-    }
-    return cityName;
-}
+// function findCityCountry(data) {
+//     let cityName = "";
+//     // Iterate through the features array
+//     for (const feature of data.features) {
+//         // Access the city and country parts directly from the context array
+//         const cityContext = feature.context.find(item => item.id.includes('place'));
+//         const countryContext = feature.context.find(item => item.id.includes('country'));
+//         if (cityContext && countryContext) {
+//             cityName = `${cityContext.text}, ${countryContext.text}`; // Concatenate city and country
+//             break; // Break out of the loop once the desired format is found
+//         }
+//     }
+//     return cityName;
+// }
 
 // Listens for written locations on GEOCODER
 geocoder.on('result', function (e) {
@@ -80,23 +80,41 @@ map.on('click', function (e) {
     fetchLocationAndWeather(lng, lat);
 });
 
+
+/////////////////
+/////////////////
+/////////////////
+/////////////////
+/////////////////
+/////////////////
+/////////////////
+/////////////////
+/////////////////
+
 // Function to fetch weather data and render forecast
 async function fetchWeatherAndRenderForecast(longitude, latitude, cityName) {
     try {
-        const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`);
-        const weatherData = await weatherResponse.json();
+        // Fetch weather and forecast data simultaneously
+        const [weatherResponse, forecastResponse] = await Promise.all([
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`),
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`)
+        ]);
+
+        if (!weatherResponse.ok || !forecastResponse.ok) {
+            throw new Error('Failed to fetch weather or forecast data.');
+        }
+
+        const [weatherData, forecastData] = await Promise.all([
+            weatherResponse.json(),
+            forecastResponse.json()
+        ]);
 
         // Update weather info
         updateWeatherInfo(weatherData, cityName);
 
-        // Fetch forecast data
-        const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`);
-        const forecastData = await forecastResponse.json();
-
         // Render forecast cards
         renderForecastCards(forecastData.list);
 
-        // Return weatherData for further use
         return weatherData;
     } catch (error) {
         console.error('Error:', error);
@@ -104,53 +122,101 @@ async function fetchWeatherAndRenderForecast(longitude, latitude, cityName) {
     }
 }
 
-function updateForecastCards(cards, forecastData) {
-    console.log("Updating forecast cards with new data:", forecastData);
-    if (!forecastData || forecastData.length === 0) {
-        console.error("No forecast data available.");
-        return;
-    }
-
-    cards.forEach((card, index) => {
-        const forecast = forecastData[index];
-        console.log("Forecast for card", index + 1, ":", forecast);
-        if (forecast) {
-            const dateTime = new Date(forecast.dt * 1000);
-            const formattedDate = dateTime.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-            const temperature = forecast.main.temp;
-            const weatherDescription = forecast.weather[0].description;
-            const weatherIcon = `http://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`;
-
-            card.innerHTML = `
-                <img src="${weatherIcon}" alt="${weatherDescription}">
-                <div class="date-time">${formattedDate}</div>
-                <div class="temperature">${temperature.toFixed(0)}&deg</div>
-            `;
-        } else {
-            console.error("No forecast data available for card", index + 1);
-        }
-    });
-}
-
-function renderWeatherForecast(forecastData) {
+function renderForecastCards(forecastData) {
     const forecastContainer = document.querySelector('#forecast');
-    forecastData.forEach(forecast => {
-        const dateTime = new Date(forecast.dt * 1000);
-        const formattedDate = dateTime.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        const temperature = forecast.main.temp;
-        const weatherDescription = forecast.weather[0].description;
-        const weatherIcon = `http://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`;
+    forecastContainer.innerHTML = ''; // Clear previous forecast cards
 
-        const forecastCard = document.createElement('div');
-        forecastCard.classList.add('forecast-card');
-        forecastCard.innerHTML = `
-            <img src="${weatherIcon}" alt="${weatherDescription}">
-            <div class="date-time">${formattedDate}</div>
-            <div class="temperature">${temperature.toFixed(0)}&deg</div>
-        `;
-        forecastContainer.appendChild(forecastCard);
-    });
+    const groupedForecast = groupForecastByDate(forecastData);
+
+    for (const date in groupedForecast) {
+        if (groupedForecast.hasOwnProperty(date)) {
+            const dayForecasts = groupedForecast[date];
+            const firstForecast = dayForecasts[0];
+
+            const dateTime = new Date(firstForecast.dt * 1000);
+            const formattedDate = dateTime.toLocaleDateString('en-US', { weekday: 'short' });
+            const temperature = firstForecast.main.temp.toFixed(0);
+            const weatherIcon = `http://openweathermap.org/img/wn/${firstForecast.weather[0].icon}.png`;
+
+            const forecastCard = document.createElement('div');
+            forecastCard.classList.add('forecast-card');
+            forecastCard.innerHTML = `
+                <div class="forechild" id="date-time">${formattedDate}</div>
+                <img class="forechild" src="${weatherIcon}" alt="${firstForecast.weather[0].description}">
+                <div class="forechild" id="temperature">${temperature}&deg;</div>
+            `;
+            forecastContainer.appendChild(forecastCard);
+        }
+    }
 }
+
+// Renders forecast widget
+async function renderWeatherWidget() {
+    const center = map.getCenter();
+    const longitude = center.lng;
+    const latitude = center.lat;
+
+    try {
+        const cityName = await fetchCityName(longitude, latitude);
+        const weatherData = await fetchWeatherAndRenderForecast(longitude, latitude, cityName);
+
+        if (!weatherData) {
+            console.error("No valid weather forecast data available.");
+        }
+    } catch (error) {
+        console.error("Error fetching or rendering weather forecast:", error);
+    }
+}
+
+function groupForecastByDate(forecastData) {
+    const groupedForecast = {};
+    forecastData.forEach(day => {
+        const date = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        if (!groupedForecast[date]) {
+            groupedForecast[date] = [];
+        }
+        groupedForecast[date].push(day);
+    });
+    return groupedForecast;
+}
+
+async function fetchCityName(longitude, latitude) {
+    try {
+        const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}&language=en`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch city name.');
+        }
+        const data = await response.json();
+        return findCityCountry(data);
+    } catch (error) {
+        console.error('Error fetching city name:', error.message);
+        return null;
+    }
+}
+
+function findCityCountry(data) {
+    let cityName = "";
+    // Iterate through the features array
+    for (const feature of data.features) {
+        // Access the city and country parts directly from the context array
+        const cityContext = feature.context.find(item => item.id.includes('place'));
+        const countryContext = feature.context.find(item => item.id.includes('country'));
+        if (cityContext && countryContext) {
+            cityName = `${cityContext.text}, ${countryContext.text}`; // Concatenate city and country
+            break; // Break out of the loop once the desired format is found
+        }
+    }
+    return cityName;
+}
+
+renderWeatherWidget();
+
+//////////
+/////////
+//////////
+//////////
+//////////
+//////////
 //////////////////////
 // Extracts city and country name from DATA 
 function extractCity(data) {
@@ -193,79 +259,6 @@ function updateWeatherInfo(weatherData, cityName) {
     risesetElement.innerHTML = `<p>Sunrise:</br>${new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p></br> <p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
 }
 ////////////////////////////////////////
-
-
-// Renders forecast widget
-async function fetchWeatherForecast(longitude, latitude) {
-    try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch weather forecast');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching weather forecast:', error.message);
-        return null;
-    }
-}
-function renderForecastCards(forecastData) { // Function to render forecast cards
-    const forecastContainer = document.querySelector('#forecast');
-    forecastContainer.innerHTML = ''; // Clear previous forecast cards
-    const groupedForecast = groupForecastByDate(forecastData);
-
-    for (const date in groupedForecast) {
-        if (groupedForecast.hasOwnProperty(date)) {
-            const dayForecasts = groupedForecast[date];
-            const forecastCard = document.createElement('div');
-            forecastCard.classList.add('forecast-card');
-
-            // Use the first forecast of the day to display general information
-            const firstForecast = dayForecasts[0];
-            const dateTime = new Date(firstForecast.dt * 1000);
-            const formattedDate = dateTime.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-            const temperature = firstForecast.main.temp;
-            const weatherDescription = firstForecast.weather[0].description;
-            const weatherIcon = `http://openweathermap.org/img/wn/${firstForecast.weather[0].icon}.png`;
-
-            forecastCard.innerHTML = `
-                <img src="${weatherIcon}" alt="${weatherDescription}">
-                <div class="date-time">${formattedDate}</div>
-                <div class="temperature">${temperature.toFixed(0)}&deg</div>
-            `;
-            forecastContainer.appendChild(forecastCard);
-        }
-    }
-}
-function groupForecastByDate(forecastData) { // Function to group forecast data by date
-    const groupedForecast = {};
-    forecastData.forEach(day => {
-        const date = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        if (!groupedForecast[date]) {
-            groupedForecast[date] = [];
-        }
-        groupedForecast[date].push(day);
-    });
-    return groupedForecast;
-}
-async function renderWeatherWidget() {
-    const center = map.getCenter();
-    const longitude = center.lng;
-    const latitude = center.lat;
-
-    try {
-        const weatherData = await fetchWeatherForecast(longitude, latitude);
-        if (weatherData && weatherData.list && weatherData.list.length > 0) {
-            renderForecastCards(weatherData.list);
-        } else {
-            console.error("No valid weather forecast data available.");
-        }
-    } catch (error) {
-        console.error("Error fetching or rendering weather forecast:", error);
-    }
-}
-
-renderWeatherWidget();
 
 //////////////////////////////////
 
