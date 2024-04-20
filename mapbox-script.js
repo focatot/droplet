@@ -17,11 +17,6 @@ const map = new mapboxgl.Map({
 map.on('load', function () {
     map.resize();
 });
-// // Listen for moveend event on the map
-// map.on('moveend', function () {
-//     renderWeatherWidget();
-// });
-
 
 // Initialize GEOCODER
 var geocoder = new MapboxGeocoder({
@@ -51,21 +46,6 @@ function fetchLocationAndWeather(longitude, latitude) {
         });
 }
 
-// function findCityCountry(data) {
-//     let cityName = "";
-//     // Iterate through the features array
-//     for (const feature of data.features) {
-//         // Access the city and country parts directly from the context array
-//         const cityContext = feature.context.find(item => item.id.includes('place'));
-//         const countryContext = feature.context.find(item => item.id.includes('country'));
-//         if (cityContext && countryContext) {
-//             cityName = `${cityContext.text}, ${countryContext.text}`; // Concatenate city and country
-//             break; // Break out of the loop once the desired format is found
-//         }
-//     }
-//     return cityName;
-// }
-
 // Listens for written locations on GEOCODER
 geocoder.on('result', function (e) {
     const [lng, lat] = e.result.geometry.coordinates;
@@ -80,46 +60,37 @@ map.on('click', function (e) {
     fetchLocationAndWeather(lng, lat);
 });
 
-
-/////////////////
-/////////////////
-/////////////////
-/////////////////
-/////////////////
-/////////////////
-/////////////////
-/////////////////
-/////////////////
-
 // Function to fetch weather data and render forecast
 async function fetchWeatherAndRenderForecast(longitude, latitude, cityName) {
-    try {
-        // Fetch weather and forecast data simultaneously
-        const [weatherResponse, forecastResponse] = await Promise.all([
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`),
-            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`)
-        ]);
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Fetch weather and forecast data simultaneously
+            const [weatherResponse, forecastResponse] = await Promise.all([
+                fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`),
+                fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${openwmAccessToken}&units=metric`)
+            ]);
 
-        if (!weatherResponse.ok || !forecastResponse.ok) {
-            throw new Error('Failed to fetch weather or forecast data.');
+            if (!weatherResponse.ok || !forecastResponse.ok) {
+                throw new Error('Failed to fetch weather or forecast data.');
+            }
+
+            const [weatherData, forecastData] = await Promise.all([
+                weatherResponse.json(),
+                forecastResponse.json()
+            ]);
+
+            // Update weather info
+            updateWeatherInfo(weatherData, cityName);
+
+            // Render forecast cards
+            renderForecastCards(forecastData.list);
+
+            resolve(weatherData);
+        } catch (error) {
+            console.error('Error:', error);
+            reject(error);
         }
-
-        const [weatherData, forecastData] = await Promise.all([
-            weatherResponse.json(),
-            forecastResponse.json()
-        ]);
-
-        // Update weather info
-        updateWeatherInfo(weatherData, cityName);
-
-        // Render forecast cards
-        renderForecastCards(forecastData.list);
-
-        return weatherData;
-    } catch (error) {
-        console.error('Error:', error);
-        return null;
-    }
+    });
 }
 
 function renderForecastCards(forecastData) {
@@ -211,13 +182,7 @@ function findCityCountry(data) {
 
 renderWeatherWidget();
 
-//////////
-/////////
-//////////
-//////////
-//////////
-//////////
-//////////////////////
+
 // Extracts city and country name from DATA 
 function extractCity(data) {
     const context = data.features[0].context; // Extract city name from the response
@@ -258,12 +223,8 @@ function updateWeatherInfo(weatherData, cityName) {
     cloudElement.innerHTML = `<p>Cloudiness:</br>${weatherData.clouds.all}%</p>`;
     risesetElement.innerHTML = `<p>Sunrise:</br>${new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p></br> <p>Sunset:</br>${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>`;
 }
-////////////////////////////////////////
-
-//////////////////////////////////
 
 // OpenWeatherMap initial request 
-// Spotlight, widgets
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=tokyo&appid=4c2ea446b8fba1b6f13c58bda72e19b2&units=metric`)
     .then(response => response.json())
     .then(weatherData => {
