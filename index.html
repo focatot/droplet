@@ -27,58 +27,42 @@
 </head>
 
 <body>
-
-  <!--///////-->
-  <!--///////-->
-  <!--///////-->
-  <!--///////-->
-  <!--///////-->
-
-  <div class="container">
-    <div class="left">
-      <div class="left-top">
-        <div id="geocoder" class="geocoder"></div>
-        <div id="citySpotlight">
-          <div class="liveValue" id="cityName"></div>
-          <div class="liveValue" id="currentTemp"></div>
-          <div class="liveValue" id="minMaxWrapper"> <!--Wrapper-->
-            <div class="liveValue" id="minTemp"></div>
-            <div class="liveValue" id="maxTemp"></div>
-          </div>
-          <div class="liveValue" id="descriptor"></div>
-
+  <div class="grid"> <!-- container -->
+    <!-- row 1 -->
+    <div class="spotlight">
+      <div id="geocoder" class="geocoder"></div>
+      <div id="liveValueContainers">
+        <div class="liveValue" id="cityName"></div>
+        <div class="liveValue" id="currentTemp"></div>
+        <div class="liveValue" id="minMaxWrapper"> <!--Wrapper-->
+          <div class="liveValue" id="minTemp"></div>
+          <div class="liveValue" id="maxTemp"></div>
         </div>
-      </div>
-      <div class="left-bottom">
-        <div id="map"></div>
+        <div class="liveValue" id="descriptor"></div>
       </div>
     </div>
-    <div class="right">
-      <div id="forecast"></div>
-      <div id="row-1">
-        <div class="item" id="feelsLike"></div>
-        <div class="item" id="risenset"></div>
-        <div class="item" id="currentHumid"></div>
-        <div class="item" id="windSpd"></div>
-        <div class="item" id="cloudiness"></div>
-
-      </div>
+    <div class="mapbox">
+      <div id="map"></div>
     </div>
+    <!-- row 2 -->
+    <div id="hourly-forecast"></div>
+    <!-- row 3 -->
+    <div id="daily-forecast"></div>
+    <div class="currentCard" id="feelsLike"></div>
+    <div class="currentCard" id="risenset"></div>
+    <div class="currentCard" id="currentHumid"></div>
+    <div class="currentCard" id="windSpd"></div>
+    <div class="currentCard" id="cloudiness"></div>
+    <div class="currentCard" id="pressure"></div>
+    <div class="currentCard" id="uvi"></div>
+    <div class="currentCard" id="visibility"></div>
   </div>
-
-  <!--///////-->
-  <!--///////-->
-  <!--///////-->
-  <!--///////-->
-  <!--///////-->
-  <!--///////-->
 
   <!-- Mapbox JS -->
   <script src="mapbox-script.js"></script>
 
   <!-- Main JS -->
   <script type="module" src="script.js"></script>
-
 </body>
 
 </html>
