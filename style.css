@@ -121,7 +121,7 @@ body {
 }
 
 .liveValue p {
-  margin: 10px 0 0 0;
+  margin: 6px 0 0 0;
   font-family: Helvetica, Arial;
   color: var(--primary-text-color);
 }
@@ -166,11 +166,8 @@ body {
 
 #minMaxWrapper {
   display: flex;
-}
-
-#maxTemp,
-#minTemp {
-  margin-right: 10px;
+  flex-direction: column;
+  gap: 0;
 }
 
 #hourly-forecast {
