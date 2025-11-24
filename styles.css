@@ -115,6 +115,9 @@ body {
   position: absolute;
   bottom: 0;
   margin: 0 0 10px 10px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
 .liveValue p {
@@ -161,16 +164,6 @@ body {
   font-size: 35px;
 }
 
-#liveValuesContainers {
-  width: 50%;
-  margin: 10px 10px 25px 25px;
-  position: absolute;
-  bottom: 0;
-
-  display: flex;
-  flex-direction: column;
-}
-
 #minMaxWrapper {
   display: flex;
 }
@@ -213,6 +206,13 @@ body {
   max-width: none !important;
   /* border-radius: 0 0 0 4px !important; */
   /*dont use overflow hide in this elements, it hides the suggestions box for results*/
+}
+
+/* Hide the default dotted focus ring on the search input and use a clean outline instead */
+.mapboxgl-ctrl-geocoder input:focus,
+.mapboxgl-ctrl-geocoder input:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 .mapboxgl-ctrl-bottom-left {
