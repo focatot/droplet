@@ -11,6 +11,11 @@ function setContent(element, html) {
   if (element) element.innerHTML = html;
 }
 
+function formatDescription(text) {
+  if (!text) return '';
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 function getTodayRange(weatherData) {
   const today = weatherData?.daily?.[0]?.temp;
   if (!today) return null;
@@ -24,13 +29,14 @@ export function createRenderer(elements) {
   function renderCurrent(weatherData, locationLabel) {
     const { current } = weatherData;
     const todayRange = getTodayRange(weatherData);
+    const description = formatDescription(current.weather?.[0]?.description);
 
     setContent(elements.cityName, `<p>${locationLabel}</p>`);
-    setContent(elements.descriptor, `<p>${current.weather?.[0]?.description || ''}</p>`);
+    setContent(elements.descriptor, `<p>${description}</p>`);
     setContent(elements.currentTemp, `<p>${current.temp.toFixed(0)}&deg;C</p>`);
     if (todayRange) {
-      setContent(elements.minTemp, `<p>Min:</br>${todayRange.min}&deg;C</p>`);
-      setContent(elements.maxTemp, `<p>Max:</br>${todayRange.max}&deg;C</p>`);
+      setContent(elements.minTemp, `<p>Min: ${todayRange.min}&deg;C</p>`);
+      setContent(elements.maxTemp, `<p>Max: ${todayRange.max}&deg;C</p>`);
     }
     setContent(elements.feelsLike, `<p>Feels Like:</br>${current.feels_like.toFixed(0)}&deg;C</p>`);
     setContent(elements.currentHumid, `<p>Humidity:</br>${current.humidity}%</p>`);
@@ -53,11 +59,12 @@ export function createRenderer(elements) {
     container.innerHTML = '';
     hourly.slice(0, 24).forEach((hour) => {
       const weatherIcon = `http://openweathermap.org/img/wn/${hour.weather?.[0]?.icon}.png`;
+      const description = formatDescription(hour.weather?.[0]?.description);
       const card = document.createElement('div');
       card.classList.add('hourly-card');
       card.innerHTML = `
         <div class="hourly-time">${formatters.hour(hour.dt)}</div>
-        <img class="hourly-icon" src="${weatherIcon}" alt="${hour.weather?.[0]?.description || ''}">
+        <img class="hourly-icon" src="${weatherIcon}" alt="${description}">
         <div class="hourly-temp">${hour.temp.toFixed(0)}&deg;</div>
       `;
       container.appendChild(card);
@@ -81,11 +88,12 @@ export function createRenderer(elements) {
       .forEach((dayForecasts) => {
         const { dt, main, weather } = dayForecasts[0];
         const weatherIcon = `http://openweathermap.org/img/wn/${weather?.[0]?.icon}.png`;
+        const description = formatDescription(weather?.[0]?.description);
         const card = document.createElement('div');
         card.classList.add('forecast-card');
         card.innerHTML = `
           <div class="daily-forecast-child" id="date-time">${formatters.weekday(dt)}</div>
-          <img class="daily-forecast-child" src="${weatherIcon}" alt="${weather?.[0]?.description || ''}">
+          <img class="daily-forecast-child" src="${weatherIcon}" alt="${description}">
           <div class="daily-forecast-child" id="temperature">${main.temp.toFixed(0)}&deg;</div>
         `;
         container.appendChild(card);
