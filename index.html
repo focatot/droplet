@@ -24,6 +24,7 @@
   <!--MAPBOX-->
   <link rel="stylesheet"
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 
 <body>
@@ -58,6 +59,9 @@
     <div class="currentCard" id="visibility"></div>
   </div>
 
+  <!-- Config: public defaults (tracked) then local overrides (gitignored) -->
+  <script src="env.public.js"></script>
+  <script src="env.js"></script>
   <!-- Main JS -->
   <script type="module" src="js/main.js"></script>
 </body>

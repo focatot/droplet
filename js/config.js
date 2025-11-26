@@ -1,6 +1,8 @@
+const envConfig = window.__DROPLET_CONFIG__ || window.__DROPLET_PUBLIC_CONFIG__ || {};
+
 export const CONFIG = {
-  MAPBOX_TOKEN: 'pk.eyJ1IjoiZmNheWF5byIsImEiOiJjbHJ5MmR3bjgxZWp4MmpwYndpejRzc2pqIn0.WnTM1dHJuY92ek7FPXHE_w',
-  OPEN_WEATHER_TOKEN: '4c2ea446b8fba1b6f13c58bda72e19b2',
+  MAPBOX_TOKEN: envConfig.MAPBOX_TOKEN || '',
+  API_BASE: envConfig.API_BASE || '',
 };
 
 export const DEFAULT_LOCATION = {
@@ -8,3 +10,9 @@ export const DEFAULT_LOCATION = {
   lat: 35.6652064,
   label: 'Tokyo, JP',
 };
+
+export function validateConfig() {
+  if (!CONFIG.MAPBOX_TOKEN) {
+    throw new Error('Missing Mapbox token. Provide MAPBOX_TOKEN in env.js or env.public.js.');
+  }
+}

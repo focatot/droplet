@@ -1,5 +1,5 @@
 import { createMapController, reverseGeocode, getBrowserLocation } from './mapbox.js';
-import { CONFIG, DEFAULT_LOCATION } from './config.js';
+import { CONFIG, DEFAULT_LOCATION, validateConfig } from './config.js';
 import { fetchWeatherAndForecast } from './openweather.js';
 import { createRenderer } from './render.js';
 
@@ -25,6 +25,7 @@ const renderer = createRenderer(elements);
 
 class WeatherApp {
   constructor() {
+    validateConfig();
     this.mapController = createMapController({
       mapboxToken: CONFIG.MAPBOX_TOKEN,
       defaultCenter: [DEFAULT_LOCATION.lng, DEFAULT_LOCATION.lat],
