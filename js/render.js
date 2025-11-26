@@ -58,7 +58,7 @@ export function createRenderer(elements) {
 
     container.innerHTML = '';
     hourly.slice(0, 24).forEach((hour) => {
-      const weatherIcon = `http://openweathermap.org/img/wn/${hour.weather?.[0]?.icon}.png`;
+      const weatherIcon = `https://openweathermap.org/img/wn/${hour.weather?.[0]?.icon}.png`;
       const description = formatDescription(hour.weather?.[0]?.description);
       const card = document.createElement('div');
       card.classList.add('hourly-card');
@@ -87,7 +87,7 @@ export function createRenderer(elements) {
       .slice(0, 5)
       .forEach((dayForecasts) => {
         const { dt, main, weather } = dayForecasts[0];
-        const weatherIcon = `http://openweathermap.org/img/wn/${weather?.[0]?.icon}.png`;
+        const weatherIcon = `https://openweathermap.org/img/wn/${weather?.[0]?.icon}.png`;
         const description = formatDescription(weather?.[0]?.description);
         const card = document.createElement('div');
         card.classList.add('forecast-card');
