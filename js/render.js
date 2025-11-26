@@ -76,28 +76,48 @@ export function createRenderer(elements) {
     if (!container) return;
 
     container.innerHTML = '';
-    const groupedByDay = forecastList.reduce((grouped, forecast) => {
-      const day = new Date(forecast.dt * 1000).toISOString().split('T')[0];
-      grouped[day] = grouped[day] || [];
-      grouped[day].push(forecast);
-      return grouped;
-    }, {});
+    if (!forecastList.length) return;
 
-    Object.values(groupedByDay)
-      .slice(0, 5)
-      .forEach((dayForecasts) => {
-        const { dt, main, weather } = dayForecasts[0];
-        const weatherIcon = `https://openweathermap.org/img/wn/${weather?.[0]?.icon}.png`;
-        const description = formatDescription(weather?.[0]?.description);
+    const looksLikeForecast = forecastList[0] && 'main' in forecastList[0];
+
+    if (looksLikeForecast) {
+      const groupedByDay = forecastList.reduce((grouped, forecast) => {
+        const day = new Date(forecast.dt * 1000).toISOString().split('T')[0];
+        grouped[day] = grouped[day] || [];
+        grouped[day].push(forecast);
+        return grouped;
+      }, {});
+
+      Object.values(groupedByDay)
+        .slice(0, 5)
+        .forEach((dayForecasts) => {
+          const { dt, main, weather } = dayForecasts[0];
+          const weatherIcon = `https://openweathermap.org/img/wn/${weather?.[0]?.icon}.png`;
+          const description = formatDescription(weather?.[0]?.description);
+          const card = document.createElement('div');
+          card.classList.add('forecast-card');
+          card.innerHTML = `
+            <div class="daily-forecast-child" id="date-time">${formatters.weekday(dt)}</div>
+            <img class="daily-forecast-child" src="${weatherIcon}" alt="${description}">
+            <div class="daily-forecast-child" id="temperature">${Math.round(main.temp)}&deg;</div>
+          `;
+          container.appendChild(card);
+        });
+    } else {
+      forecastList.slice(0, 5).forEach((day) => {
+        const weatherIcon = `https://openweathermap.org/img/wn/${day.weather?.[0]?.icon}.png`;
+        const description = formatDescription(day.weather?.[0]?.description);
+        const tempDisplay = day.temp?.day ?? day.temp?.max ?? 0;
         const card = document.createElement('div');
         card.classList.add('forecast-card');
         card.innerHTML = `
-          <div class="daily-forecast-child" id="date-time">${formatters.weekday(dt)}</div>
+          <div class="daily-forecast-child" id="date-time">${formatters.weekday(day.dt)}</div>
           <img class="daily-forecast-child" src="${weatherIcon}" alt="${description}">
-          <div class="daily-forecast-child" id="temperature">${main.temp.toFixed(0)}&deg;</div>
+          <div class="daily-forecast-child" id="temperature">${Math.round(tempDisplay)}&deg;</div>
         `;
         container.appendChild(card);
       });
+    }
   }
 
   return { renderCurrent, renderHourly, renderDaily };
