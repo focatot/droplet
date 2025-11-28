@@ -34,6 +34,13 @@ function describeVisibility(meters) {
   return { label: 'Low visibility', km };
 }
 
+function describePressure(hpa) {
+  const value = Math.round(hpa || 0);
+  if (value < 1005) return { label: 'Low pressure', value };
+  if (value > 1025) return { label: 'High pressure', value };
+  return { label: 'Normal pressure', value };
+}
+
 function getTodayRange(weatherData) {
   const today = weatherData?.daily?.[0]?.temp;
   if (!today) return null;
@@ -67,7 +74,8 @@ export function createRenderer(elements) {
     const sunsetTime = new Date(current.sunset * 1000).toLocaleTimeString();
     setContent(elements.risenset, `<p>Sunrise:</br>${sunriseTime}</p><p>Sunset:</br>${sunsetTime}</p>`);
 
-    setContent(elements.pressure, `<p>Pressure:</br>${current.pressure} hPa</p>`);
+    const pressure = describePressure(current.pressure);
+    setContent(elements.pressure, `<p>Pressure:</br>${pressure.label} (${pressure.value} hPa)</p>`);
     setContent(elements.uvi, `<p>UV:</br>${Math.round(current.uvi || 0)}</p>`);
     const visibility = describeVisibility(current.visibility);
     setContent(elements.visibility, `<p>Visibility:</br>${visibility.label} (${visibility.km} km)</p>`);
