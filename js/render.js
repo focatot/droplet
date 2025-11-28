@@ -49,7 +49,8 @@ export function createRenderer(elements) {
     }
     setContent(elements.feelsLike, `<p>Feels Like:</br>${current.feels_like.toFixed(0)}&deg;C</p>`);
     setContent(elements.currentHumid, `<p>Humidity:</br>${current.humidity}%</p>`);
-    setContent(elements.windSpd, `<p>Wind Speed:</br>${current.wind_speed.toFixed(0)} m/s</p>`);
+    const windKph = (current.wind_speed || 0) * 3.6;
+    setContent(elements.windSpd, `<p>Wind Speed:</br>${windKph.toFixed(0)} km/h</p>`);
     const cloudiness = describeCloudiness(current.clouds);
     setContent(elements.cloudiness, `<p>Cloudiness:</br>${cloudiness.label} (${cloudiness.value}%)</p>`);
 
@@ -58,7 +59,7 @@ export function createRenderer(elements) {
     setContent(elements.risenset, `<p>Sunrise:</br>${sunriseTime}</p><p>Sunset:</br>${sunsetTime}</p>`);
 
     setContent(elements.pressure, `<p>Pressure:</br>${current.pressure} hPa</p>`);
-    setContent(elements.uvi, `<p>UV:</br>${current.uvi}</p>`);
+    setContent(elements.uvi, `<p>UV:</br>${Math.round(current.uvi || 0)}</p>`);
     setContent(elements.visibility, `<p>Visibility:</br>${(current.visibility / 1000).toFixed(1)} km</p>`);
   }
 
