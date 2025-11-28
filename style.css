@@ -16,6 +16,7 @@
   --input-bg: rgba(255, 255, 255, 0.06);
   --input-focus: rgba(56, 189, 248, 0.35);
   --shadow: 0 20px 40px -25px rgba(0, 0, 0, 0.75);
+  --shadow-strong: 0 24px 50px -28px rgba(0, 0, 0, 0.85);
   --border: 1px solid rgba(255, 255, 255, 0.08);
   --radius: 14px;
   --rowOneHeight: 320px;
@@ -278,6 +279,45 @@ body {
 
 .mapboxgl-ctrl-geocoder .suggestions li.active,
 .mapboxgl-ctrl-geocoder .suggestions li[aria-selected='true'] {
+  background: rgba(56, 189, 248, 0.12) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Extra specificity to override Mapbox defaults when bundled CSS wins */
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+  background: var(--card-bg-strong) !important;
+  border: var(--border) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl .mapboxgl-ctrl-geocoder--icon-close svg path {
+  fill: var(--text-muted) !important;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl .suggestions-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 2px);
+  z-index: 50;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl .suggestions {
+  border: none !important;
+  box-shadow: var(--shadow-strong) !important;
+  overflow: hidden;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl .suggestions li {
+  background: transparent !important;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl .suggestions li:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl .suggestions li.active,
+.mapboxgl-ctrl-geocoder.mapboxgl-ctrl .suggestions li[aria-selected='true'] {
   background: rgba(56, 189, 248, 0.12) !important;
   color: var(--text-primary) !important;
 }
