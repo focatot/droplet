@@ -16,6 +16,15 @@ function formatDescription(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+function describeCloudiness(percent) {
+  const value = Number.isFinite(percent) ? Math.round(percent) : 0;
+  if (value <= 10) return { label: 'Clear', value };
+  if (value <= 30) return { label: 'Few clouds', value };
+  if (value <= 60) return { label: 'Scattered clouds', value };
+  if (value <= 85) return { label: 'Mostly cloudy', value };
+  return { label: 'Overcast', value };
+}
+
 function getTodayRange(weatherData) {
   const today = weatherData?.daily?.[0]?.temp;
   if (!today) return null;
@@ -41,7 +50,8 @@ export function createRenderer(elements) {
     setContent(elements.feelsLike, `<p>Feels Like:</br>${current.feels_like.toFixed(0)}&deg;C</p>`);
     setContent(elements.currentHumid, `<p>Humidity:</br>${current.humidity}%</p>`);
     setContent(elements.windSpd, `<p>Wind Speed:</br>${current.wind_speed.toFixed(0)} m/s</p>`);
-    setContent(elements.cloudiness, `<p>Cloudiness:</br>${current.clouds}%</p>`);
+    const cloudiness = describeCloudiness(current.clouds);
+    setContent(elements.cloudiness, `<p>Cloudiness:</br>${cloudiness.label} (${cloudiness.value}%)</p>`);
 
     const sunriseTime = new Date(current.sunrise * 1000).toLocaleTimeString();
     const sunsetTime = new Date(current.sunset * 1000).toLocaleTimeString();
