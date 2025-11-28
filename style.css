@@ -242,6 +242,11 @@ body {
   color: var(--text-muted) !important;
 }
 
+.mapboxgl-ctrl-geocoder--icon-close {
+  fill: var(--text-muted) !important;
+  color: var(--text-muted) !important;
+}
+
 .mapboxgl-ctrl-geocoder:focus-within {
   border: 1px solid var(--accent) !important;
   box-shadow: 0 0 0 1px var(--input-focus);
@@ -252,6 +257,7 @@ body {
   background: var(--card-bg-strong) !important;
   color: var(--text-primary) !important;
   border-radius: 0 0 var(--radius) var(--radius);
+  z-index: 20;
 }
 
 .mapboxgl-ctrl-geocoder .suggestions li {
@@ -267,7 +273,13 @@ body {
 }
 
 .mapboxgl-ctrl-geocoder .suggestions li:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions li.active,
+.mapboxgl-ctrl-geocoder .suggestions li[aria-selected='true'] {
+  background: rgba(56, 189, 248, 0.12) !important;
+  color: var(--text-primary) !important;
 }
 
 .mapboxgl-ctrl-geocoder input,
