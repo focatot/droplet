@@ -13,6 +13,8 @@
   --text-muted: #a4afc4;
   --accent: #38bdf8;
   --accent-strong: #60a5fa;
+  --input-bg: rgba(255, 255, 255, 0.06);
+  --input-focus: rgba(56, 189, 248, 0.35);
   --shadow: 0 20px 40px -25px rgba(0, 0, 0, 0.75);
   --border: 1px solid rgba(255, 255, 255, 0.08);
   --radius: 14px;
@@ -209,8 +211,12 @@ body {
 .mapboxgl-ctrl-geocoder {
   min-width: 100% !important;
   max-width: none !important;
-  /* border-radius: 0 0 0 4px !important; */
-  /*dont use overflow hide in this elements, it hides the suggestions box for results*/
+  background: var(--card-bg-strong) !important;
+  color: var(--text-primary) !important;
+  border: var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  border-radius: var(--radius) !important;
+  backdrop-filter: blur(6px);
 }
 
 /* Hide the default dotted focus ring on the search input and use a clean outline instead */
@@ -218,6 +224,56 @@ body {
 .mapboxgl-ctrl-geocoder input:focus-visible {
   outline: none;
   box-shadow: none;
+}
+
+.mapboxgl-ctrl-geocoder input {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+}
+
+.mapboxgl-ctrl-geocoder input::placeholder {
+  color: var(--text-muted);
+}
+
+.mapboxgl-ctrl-geocoder--icon,
+.mapboxgl-ctrl-geocoder--icon svg,
+.mapboxgl-ctrl-geocoder--button {
+  fill: var(--text-muted) !important;
+  color: var(--text-muted) !important;
+}
+
+.mapboxgl-ctrl-geocoder:focus-within {
+  border: 1px solid var(--accent) !important;
+  box-shadow: 0 0 0 1px var(--input-focus);
+}
+
+.mapboxgl-ctrl-geocoder .suggestions-wrapper,
+.mapboxgl-ctrl-geocoder .suggestions {
+  background: var(--card-bg-strong) !important;
+  color: var(--text-primary) !important;
+  border-radius: 0 0 var(--radius) var(--radius);
+  border: var(--border);
+}
+
+.mapboxgl-ctrl-geocoder .suggestions li {
+  color: var(--text-primary) !important;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions li .mapboxgl-ctrl-geocoder--suggestion-title {
+  color: var(--text-primary) !important;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions li .mapboxgl-ctrl-geocoder--suggestion-address {
+  color: var(--text-muted) !important;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions li:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.mapboxgl-ctrl-geocoder input,
+.mapboxgl-ctrl-geocoder .suggestions {
+  font-family: 'Roboto', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .mapboxgl-ctrl-bottom-left {
