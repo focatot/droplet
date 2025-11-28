@@ -4,21 +4,27 @@
 /*************** Variables ***************/
 
 :root {
-  --background-color: rgb(190 186 186 / 71%);
-  --container-color: rgba(255, 255, 255, 0.912);
-  --button-color: rgba(255, 255, 255, 0.865);
-  --primary-text-color: #5b5858;
-  --primary-font: ;
-  --shadow: 0 0 10px 2px rgba(0, 0, 0, .1);
-  --border: solid 1px rgb(255, 255, 255);
-  --rowOneHeight: 319px
-    /*plus grid gap minus border*/
+  --background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.12), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.18), transparent 30%),
+    #0b1020;
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-bg-strong: rgba(255, 255, 255, 0.08);
+  --text-primary: #e8edf4;
+  --text-muted: #a4afc4;
+  --shadow: 0 20px 40px -25px rgba(0, 0, 0, 0.75);
+  --border: 1px solid rgba(255, 255, 255, 0.08);
+  --radius: 14px;
+  --rowOneHeight: 320px;
 }
 
 /*************** HTML tags ***************/
 
 body {
-  background-color: var(--background-color);
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: 'Roboto', 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  margin: 0;
 }
 
 /*************** Structure ***************/
@@ -32,7 +38,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   padding-bottom: 35px;
   grid-gap: 20px;
-  width: 80%;
+  width: 85%;
   margin: 5% auto;
 }
 
@@ -40,15 +46,16 @@ body {
   grid-area: 1 / 1 / 3 / 3;
   border: var(--border);
   box-shadow: var(--shadow);
-  border-radius: 8px;
+  border-radius: var(--radius);
   height: var(--rowOneHeight);
 }
 
 .spotlight,
 #map {
-  background-color: var(--container-color);
+  background-color: var(--card-bg-strong);
   overflow: hidden;
   position: relative;
+  backdrop-filter: blur(6px);
 }
 
 #feelsLike {
@@ -99,16 +106,18 @@ body {
   width: 99%;
 
   /*Style*/
-  border-radius: 8px;
-  background-color: var(--button-color);
-  font-family: Helvetica, Arial;
-  color: var(--primary-text-color);
+  border-radius: var(--radius);
+  background-color: var(--card-bg);
+  color: var(--text-primary);
   text-align: center;
-  /* line-height: 1.5; */
   border: var(--border);
-  /* -webkit-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75); */
   box-shadow: var(--shadow);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.currentCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.9);
 }
 
 #liveValueContainers {
@@ -122,8 +131,7 @@ body {
 
 .liveValue p {
   margin: 6px 0 0 0;
-  font-family: Helvetica, Arial;
-  color: var(--primary-text-color);
+  color: var(--text-primary);
 }
 
 #daily-forecast {
@@ -135,15 +143,11 @@ body {
   justify-content: space-between;
   overflow: scroll;
   /* Style */
-  background-color: var(--button-color);
-  font-family: Helvetica, Arial;
-  color: var(--primary-text-color);
+  background-color: var(--card-bg);
+  color: var(--text-primary);
   text-align: center;
-  border-radius: 8px;
-  /* line-height: 1.5; */
+  border-radius: var(--radius);
   border: var(--border);
-  /* -webkit-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75); */
   box-shadow: var(--shadow);
 }
 
@@ -151,17 +155,21 @@ body {
   text-align: center;
   display: flex;
   flex-direction: row;
-  margin: 15px auto;
+  margin: 12px auto;
   align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .daily-forecast-child {
-  margin: 0 25px;
+  margin: 0 18px;
 }
 
 
 #currentTemp {
-  font-size: 35px;
+  font-size: 34px;
 }
 
 #minMaxWrapper {
@@ -179,15 +187,11 @@ body {
   margin-right: 20px; */
   overflow: scroll;
   /* Style */
-  background-color: var(--button-color);
-  font-family: Helvetica, Arial;
-  color: var(--primary-text-color);
+  background-color: var(--card-bg);
+  color: var(--text-primary);
   text-align: center;
-  border-radius: 8px;
-  /* line-height: 1.5; */
+  border-radius: var(--radius);
   border: var(--border);
-  /* -webkit-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75); */
   box-shadow: var(--shadow);
 }
 
@@ -222,7 +226,7 @@ body {
 
 .mapbox {
   grid-area: 1 / 3 / 3 / 5;
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: var(--border);
   box-shadow: var(--shadow);
   height: var(--rowOneHeight);
@@ -231,7 +235,7 @@ body {
 #map {
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 
 /*HOURLY FORECAST*/
@@ -245,12 +249,15 @@ body {
   margin: auto 0 auto 55px;
   border-radius: 5px;
   width: 100px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 8px;
 }
 
 .hourly-time {
   font-size: 12px;
   font-weight: 700;
-  color: lightgrey;
+  color: var(--text-muted);
 }
 
 .hourly-temp {
