@@ -25,6 +25,15 @@ function describeCloudiness(percent) {
   return { label: 'Overcast', value };
 }
 
+function describeVisibility(meters) {
+  const km = Math.max(0, Math.round((meters || 0) / 1000));
+  if (km >= 10) return { label: 'Perfectly clear', km };
+  if (km >= 8) return { label: 'Clear views', km };
+  if (km >= 5) return { label: 'Good visibility', km };
+  if (km >= 3) return { label: 'A bit hazy', km };
+  return { label: 'Low visibility', km };
+}
+
 function getTodayRange(weatherData) {
   const today = weatherData?.daily?.[0]?.temp;
   if (!today) return null;
@@ -60,7 +69,8 @@ export function createRenderer(elements) {
 
     setContent(elements.pressure, `<p>Pressure:</br>${current.pressure} hPa</p>`);
     setContent(elements.uvi, `<p>UV:</br>${Math.round(current.uvi || 0)}</p>`);
-    setContent(elements.visibility, `<p>Visibility:</br>${(current.visibility / 1000).toFixed(1)} km</p>`);
+    const visibility = describeVisibility(current.visibility);
+    setContent(elements.visibility, `<p>Visibility:</br>${visibility.label} (${visibility.km} km)</p>`);
   }
 
   function renderHourly(hourly = []) {
