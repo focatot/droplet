@@ -6,7 +6,7 @@
 :root {
   --background: radial-gradient(circle at 18% 18%, rgba(99, 102, 241, 0.06), transparent 28%),
     radial-gradient(circle at 78% 4%, rgba(14, 165, 233, 0.08), transparent 24%),
-    linear-gradient(135deg, #0c111d 0%, #0d1320 50%, #0a0f1a 100%);
+    linear-gradient(135deg, #1d1f23 0%, #27282b 50%, #0a0f1a 100%);
   --card-bg: rgba(255, 255, 255, 0.06);
   --card-bg-strong: rgba(255, 255, 255, 0.08);
   --text-primary: #e8edf4;
@@ -288,8 +288,8 @@ body {
   color: var(--text-primary) !important;
 }
 
-.mapboxgl-ctrl-geocoder .suggestions > .active > a,
-.mapboxgl-ctrl-geocoder .suggestions > li > a:hover {
+.mapboxgl-ctrl-geocoder .suggestions>.active>a,
+.mapboxgl-ctrl-geocoder .suggestions>li>a:hover {
   background: rgba(56, 189, 248, 0.12) !important;
   color: var(--text-primary) !important;
 }
