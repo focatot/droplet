@@ -252,7 +252,6 @@ body {
   background: var(--card-bg-strong) !important;
   color: var(--text-primary) !important;
   border-radius: 0 0 var(--radius) var(--radius);
-  border: var(--border);
 }
 
 .mapboxgl-ctrl-geocoder .suggestions li {
