@@ -36,9 +36,9 @@ function describeVisibility(meters) {
 
 function describePressure(hpa) {
   const value = Math.round(hpa || 0);
-  if (value < 1005) return { label: 'Low pressure', value };
-  if (value > 1025) return { label: 'High pressure', value };
-  return { label: 'Normal pressure', value };
+  if (value < 1005) return { label: 'Low', value };
+  if (value > 1025) return { label: 'High', value };
+  return { label: 'Normal', value };
 }
 
 function getTodayRange(weatherData) {
